@@ -38,7 +38,6 @@ Typecheck, lint and build pass, and `npm audit` reports no vulnerabilities.
 | `config.js` has no company number or registered office yet | The legal line shows only the Privacy and Booking terms links; UK law requires the company details | Fill in `companyNumber`, `registeredIn` and `registeredOffice` (playbook, Step 6) |
 | `/review/` shows only a WhatsApp fallback until review links exist | Customers scanning the card can't leave a Google or Trustpilot review yet | Add `googleReviewUrl` and/or `trustpilotUrl` once the profiles exist |
 | `site.reviews` holds hand-entered reviews | Showing only hand-picked reviews breaks the guidance in the playbook (Step 5) | Leave it empty; add the Trustpilot widget once the profile exists |
-| Two spellings: "Smoothvault Moves" in text, "Smooth Vault" in the logo | Inconsistent name across Google, Trustpilot and directories | Decide before creating the Google profile (playbook, first decision) |
 | Booking terms rest on assumptions (deposit size, when the balance is due, cancelling within 7 days) | Terms customers rely on may not match how the business works | Confirm them and have a solicitor check `/terms/` |
 | The FAQ intro lowercases the hours: "we reply during mon–fri, 9am–6pm." | Reads oddly | Show `site.hours` as written |
 | Choosing Storage or House clearance and skipping "Moving to" leaves a blank line after "From" in the WhatsApp message | Cosmetic | Filter out empty lines before adding the section breaks |
@@ -53,13 +52,17 @@ These don't change what visitors see:
 - Shadows use `PCFShadowMap` directly. Three.js r186 removed `PCFSoftShadowMap` and was already falling back.
 - The frosted header and bars include the unprefixed `backdrop-filter`, so Firefox gets the blur too.
 
+## Name
+
+The business name is "Smooth Vault Moves", matching the logo (decided 7 October 2026). Every "Smoothvault" in the site text, page titles, Google business details, legal pages, WhatsApp messages, the 3D van's livery and the playbook now reads "Smooth Vault"; the original Claude session used "Smoothvault" in text, so those strings now differ from it on purpose. The web address and email stay `smoothvaultmoves.co.uk`. The site's legal name is now "Smooth Vault Moves Ltd": check it matches the Companies House record exactly.
+
 ## Changes from the review card design
 
 On the front, "Or visit" and the address now sit below the QR code instead of beside it. Beside it, the address (225 px) was wider than its 143 px column and ran 42 px past the card's edge.
 
 ## Suggested order of work
 
-1. Make the six launch decisions at the top of the [playbook](launch-playbook.md), then fill in `public/config.js`.
+1. Make the remaining launch decisions at the top of the [playbook](launch-playbook.md), then fill in `public/config.js`.
 2. Connect this repo to Cloudflare Pages (build `npm run build`, output `dist`) so every push deploys.
 3. Print the review cards once `/review/` has its review links.
 4. Work through the playbook: business email, Google Business Profile, Trustpilot, then the Trustpilot widget on the site.

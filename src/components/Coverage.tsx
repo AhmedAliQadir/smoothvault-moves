@@ -26,7 +26,7 @@ export function Coverage() {
           <svg
             viewBox={GB_VIEWBOX}
             role="img"
-            aria-label="Map of Great Britain showing Smoothvault teams in Glasgow, Edinburgh, Manchester, Sheffield, Nottingham, Birmingham and London"
+            aria-label="Map of Great Britain showing Smooth Vault teams in Glasgow, Edinburgh, Manchester, Sheffield, Nottingham, Birmingham and London"
           >
             <path d={GB_OUTLINE} className="map__land" />
             <path d={routePath} className="map__route" pathLength={1} />

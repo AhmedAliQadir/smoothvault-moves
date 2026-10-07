@@ -6,7 +6,7 @@ import { PhoneIcon, WhatsAppIcon } from './icons'
 export function MobileBar() {
   return (
     <div className="mobile-bar" role="region" aria-label="Quick contact">
-      <a className="btn btn--cta" href={whatsappLink('Hi Smoothvault Moves, I would like a quote.')} target="_blank" rel="noopener">
+      <a className="btn btn--cta" href={whatsappLink('Hi Smooth Vault Moves, I would like a quote.')} target="_blank" rel="noopener">
         <WhatsAppIcon width={20} height={20} /> WhatsApp
       </a>
       <a className="btn btn--ghost" href={`tel:${site.phoneE164}`}>

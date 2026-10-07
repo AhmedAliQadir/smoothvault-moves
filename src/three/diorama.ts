@@ -421,7 +421,7 @@ export async function createDiorama({ canvas, lowTier, coarsePointer }: DioramaO
     const liveryMaterial = new THREE.MeshStandardMaterial({
       map: makeLabelTexture(
         [
-          { text: 'SMOOTHVAULT', size: 84, weight: 800, color: '#F7F9FC' },
+          { text: 'SMOOTH VAULT', size: 84, weight: 800, color: '#F7F9FC' },
           { text: 'MOVES · DOOR TO DOOR', size: 38, weight: 600, color: '#6FB1E8' },
         ],
         1024,

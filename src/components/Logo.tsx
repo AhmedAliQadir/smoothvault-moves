@@ -1,12 +1,12 @@
 /**
- * The "Vault S" logo: mark plus "Smoothvault" / "MOVES" wordmark, as outlines so it needs no font.
+ * The "Vault S" logo: mark plus "Smooth Vault" / "MOVES" wordmark, as outlines so it needs no font.
  * Colours come from --logo-ink and --logo-line (set in global.css; the footer uses the reversed colours).
  */
 export function Logo() {
   return (
     <span className="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541.68 132" role="img" aria-label="Smoothvault Moves">
-        <title>Smoothvault Moves</title>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541.68 132" role="img" aria-label="Smooth Vault Moves">
+        <title>Smooth Vault Moves</title>
         <g transform="translate(0 0) scale(0.66000) translate(-20 -20)">
           <path fill="var(--logo-ink, #0A1C2E)" d="M193.32 52 A100 100 0 0 0 34.58 172 L132 172 A22 22 0 0 0 132 128 L108 128 A38 38 0 0 1 108 52 Z" />
           <path fill="var(--logo-line, #1F6FB2)" d="M205.42 68 L108 68 A22 22 0 0 0 108 112 L132 112 A38 38 0 0 1 132 188 L46.68 188 A100 100 0 0 0 205.42 68 Z" />

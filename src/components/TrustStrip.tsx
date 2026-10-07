@@ -6,7 +6,7 @@ const trustIcons = [ShieldCheckIcon, ClockIcon, HeartIcon, TagIcon]
 
 export function TrustStrip() {
   return (
-    <section className="trust" aria-label="Why Smoothvault">
+    <section className="trust" aria-label="Why Smooth Vault">
       <ul className="trust__list container">
         {trustPoints.map((point, i) => {
           const Icon = trustIcons[i]

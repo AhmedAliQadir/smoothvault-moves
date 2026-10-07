@@ -9,8 +9,8 @@ export interface Review {
 
 /** Business details used across the site. Change them here, not in components. */
 export const site = {
-  name: 'Smoothvault Moves',
-  legalName: 'Smoothvault Moves Ltd',
+  name: 'Smooth Vault Moves',
+  legalName: 'Smooth Vault Moves Ltd',
   domain: 'smoothvaultmoves.co.uk',
   slogan: 'Moving made easy.',
   sloganTail: 'From door to door.',

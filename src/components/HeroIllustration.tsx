@@ -23,7 +23,7 @@ export function HeroIllustration({ className }: { className?: string }) {
       className={className}
       viewBox="0 0 800 460"
       role="img"
-      aria-label="Illustration: a Smoothvault van driving along a blue route from one home, past a secure storage vault, to a new home"
+      aria-label="Illustration: a Smooth Vault van driving along a blue route from one home, past a secure storage vault, to a new home"
     >
       <ellipse cx="400" cy="440" rx="330" ry="16" fill="#0A1C2E" opacity="0.08" />
       <path d="M60 400 L130 170 Q134 160 146 160 L654 160 Q666 160 670 170 L740 400 Z" fill="#E7EEF6" transform="translate(0 16)" />

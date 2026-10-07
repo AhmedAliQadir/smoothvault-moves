@@ -1,6 +1,6 @@
-# Smoothvault Moves
+# Smooth Vault Moves
 
-Website for Smoothvault Moves, a family-run removals and secure storage company covering England, Scotland and Wales. React + TypeScript, built with Vite, with a scroll-driven Three.js hero in which a branded van loads boxes, stops at a storage vault and delivers to a new home.
+Website for Smooth Vault Moves, a family-run removals and secure storage company covering England, Scotland and Wales. React + TypeScript, built with Vite, with a scroll-driven Three.js hero in which a branded van loads boxes, stops at a storage vault and delivers to a new home.
 
 Pages: the home page, `/privacy/`, `/terms/`, `/review/` (where the review-card QR code points) and a `404.html`.
 

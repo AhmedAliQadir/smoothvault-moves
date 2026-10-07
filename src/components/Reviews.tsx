@@ -39,7 +39,7 @@ export function Reviews() {
             </div>
             <a
               className="btn btn--ghost"
-              href={runtimeConfig().reviewUrl || whatsappLink('Hi, I moved with Smoothvault recently and would like to leave a review.')}
+              href={runtimeConfig().reviewUrl || whatsappLink('Hi, I moved with Smooth Vault recently and would like to leave a review.')}
               target="_blank"
               rel="noopener"
             >

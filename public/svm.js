@@ -1,4 +1,4 @@
-/* Smoothvault Moves — small helpers shared by every page (no cookies, no tracking). */
+/* Smooth Vault Moves — small helpers shared by every page (no cookies, no tracking). */
 (function () {
   var C = (window.SVM_CONFIG = window.SVM_CONFIG || {});
   function esc(v) {
@@ -14,7 +14,7 @@
     var bits = [];
     if (C.registeredIn || C.companyNumber) {
       bits.push(
-        "Smoothvault Moves Ltd" +
+        "Smooth Vault Moves Ltd" +
           (C.registeredIn ? ", registered in " + esc(C.registeredIn) : "") +
           (C.companyNumber ? ", company no. " + esc(C.companyNumber) : "") + "."
       );

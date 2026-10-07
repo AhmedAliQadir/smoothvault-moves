@@ -19,7 +19,7 @@ export function HeroCopy({ asHeading = true }: { asHeading?: boolean }) {
       <div className="hero__ctas">
         <a
           className="btn btn--cta"
-          href={whatsappLink('Hi Smoothvault Moves, I would like a quote for a move.')}
+          href={whatsappLink('Hi Smooth Vault Moves, I would like a quote for a move.')}
           target="_blank"
           rel="noopener"
         >

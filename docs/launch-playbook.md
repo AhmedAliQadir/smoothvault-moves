@@ -1,4 +1,4 @@
-# Smoothvault Moves — Launch Playbook
+# Smooth Vault Moves — Launch Playbook
 
 > Imported on 7 October 2026 from the Claude Docs artifact [Smoothvault Moves — Launch Playbook](https://claude.ai/artifact/1ZoKmdehhJ6oe1rrRSQa2n), last edited 6 October 2026.
 > References to `smoothvault-site.zip`, `config.js` and uploading the `site` folder now map to this repo: settings live in
@@ -12,8 +12,8 @@ The website is built and tested, with the Vault S logo in place; six decisions a
 
 | Decision | Why it matters | Recommendation |
 | --- | --- | --- |
-| One spelling of the name | The logo reads "Smooth Vault Moves"; the company, site text and email say "Smoothvault Moves". Google, Trustpilot and directories need one consistent name. | Keep "Smoothvault Moves" as the business name everywhere online, and treat the logo as styling, or change the wordmark to "Smoothvault". Decide before the Google profile is created. |
-| Company number and registered office | UK law requires a limited company's website to show its registered number, registered office and where it's registered. I couldn't find a Companies House record under "Smoothvault Moves Ltd". | Confirm the exact registered name and number, then add them to `config.js`. An accountant's or service address can be the registered office. |
+| One spelling of the name | Google, Trustpilot and directories need one consistent name. | **Decided (7 October 2026): "Smooth Vault Moves"**, matching the logo. The site text now uses it too; the web address and email stay `smoothvaultmoves.co.uk`. |
+| Company number and registered office | UK law requires a limited company's website to show its registered number, registered office and where it's registered. I couldn't find a Companies House record under "Smoothvault Moves Ltd". | Confirm the exact registered name and number (the site now says "Smooth Vault Moves Ltd"; it must match Companies House exactly), then add them to `config.js`. An accountant's or service address can be the registered office. |
 | 3D hero on phones | In a lab test, the phone home page scored 45/100 for speed with the 3D scene and 91/100 without it. The 3D version also hides the WhatsApp button in the phone hero. | Set `mobile3D: false` for launch. Desktop keeps the 3D scene. |
 | Booking terms | `/terms/` is drafted from the client's policy (free cancellation 7+ days before, deposit returned, extras on top) plus the legal 14-day cancellation right. Deposit size, when the balance is due, and what happens inside 7 days are assumptions. | Confirm those three points, then have a solicitor check the page. I'm not a lawyer. |
 | Insurance proof | The site promises goods-in-transit and public liability cover on every job. | Keep both certificates current and to hand. |
@@ -80,11 +80,11 @@ Start with one service-area profile, address hidden, covering towns within about
 
 Google's rules that matter here:
 
-- The name must be the real-world business name: no keywords, towns or slogans (so not "Smoothvault Moves Removals Birmingham").
+- The name must be the real-world business name: no keywords, towns or slogans (so not "Smooth Vault Moves Removals Birmingham").
 - Use a local phone number that reaches the business: 07824 101373.
 - Hide the address if customers don't visit you. Only list a city as its own profile if it has a staffed base.
 
-1. Sign in at business.google.com with the business Google account and add "Smoothvault Moves" (or the spelling decided above).
+1. Sign in at business.google.com with the business Google account and add "Smooth Vault Moves".
 2. Pick the closest primary category, such as Moving company. Add a storage category only if customers' goods are kept at a storage site.
 3. Answer "No" to a location customers can visit, then add service areas.
 4. Add the phone number, `https://smoothvaultmoves.co.uk/` and the real opening hours. If moves happen at weekends, show weekend hours.
@@ -96,7 +96,7 @@ Google's rules that matter here:
 Description, ready to paste (646 of 750 characters):
 
 ```text
-Smoothvault Moves is a family-run removals and storage company covering England, Scotland and Wales. We handle home removals, office moves, packing, man and van jobs, long-distance moves, house clearances and specialist items such as pianos and antiques. When completion dates don't line up, we keep your belongings safe in our own secure storage until your new home is ready. Every job is quoted individually for what it actually involves, and we're fully insured with goods-in-transit and public liability cover. We often have same-day or next-day availability. Message us on WhatsApp for a free quote, or book a free video or in-person survey.
+Smooth Vault Moves is a family-run removals and storage company covering England, Scotland and Wales. We handle home removals, office moves, packing, man and van jobs, long-distance moves, house clearances and specialist items such as pianos and antiques. When completion dates don't line up, we keep your belongings safe in our own secure storage until your new home is ready. Every job is quoted individually for what it actually involves, and we're fully insured with goods-in-transit and public liability cover. We often have same-day or next-day availability. Message us on WhatsApp for a free quote, or book a free video or in-person survey.
 ```
 
 Services to add:
@@ -149,7 +149,7 @@ The routine for each job:
 WhatsApp, the evening of the move:
 
 ```text
-Hi [first name], thank you for moving with Smoothvault Moves today. We hope you're settling in well.
+Hi [first name], thank you for moving with Smooth Vault Moves today. We hope you're settling in well.
 
 If you have a minute, we'd really value an honest review. It helps other families choose a mover:
 https://smoothvaultmoves.co.uk/review/
@@ -160,7 +160,7 @@ And if anything wasn't right, just reply here and we'll sort it.
 Text message:
 
 ```text
-Thanks for moving with Smoothvault Moves, [first name]! Could you leave us an honest review? It takes about a minute: smoothvaultmoves.co.uk/review/
+Thanks for moving with Smooth Vault Moves, [first name]! Could you leave us an honest review? It takes about a minute: smoothvaultmoves.co.uk/review/
 ```
 
 Email:
@@ -170,7 +170,7 @@ Subject: How did your move go?
 
 Hi [first name],
 
-Thank you for choosing Smoothvault Moves. We hope the new place already feels like home.
+Thank you for choosing Smooth Vault Moves. We hope the new place already feels like home.
 
 Could you spare a minute to tell other families how your move went? Choose Google or Trustpilot here:
 https://smoothvaultmoves.co.uk/review/
@@ -178,7 +178,7 @@ https://smoothvaultmoves.co.uk/review/
 If there's anything we can still help with, just reply to this email.
 
 Thanks,
-Smoothvault Moves
+Smooth Vault Moves
 07824 101373 · smoothvaultmoves.co.uk
 ```
 
@@ -191,13 +191,13 @@ Hi [first name], a quick reminder in case it slipped past: if you'd like to revi
 Replying to a good review:
 
 ```text
-Thank you, [first name]! It was a pleasure helping with your move. Enjoy the new home. – Smoothvault Moves
+Thank you, [first name]! It was a pleasure helping with your move. Enjoy the new home. – Smooth Vault Moves
 ```
 
 Replying to a poor review (never argue, and never share booking details in public):
 
 ```text
-Hi [first name], we're sorry your move didn't go as it should have. We'd like to put this right. Please message us on WhatsApp on 07824 101373 or email hello@smoothvaultmoves.co.uk with your move date, and we'll look into it straight away. – Smoothvault Moves
+Hi [first name], we're sorry your move didn't go as it should have. We'd like to put this right. Please message us on WhatsApp on 07824 101373 or email hello@smoothvaultmoves.co.uk with your move date, and we'll look into it straight away. – Smooth Vault Moves
 ```
 
 ## Step 6: Legal and compliance checklist
@@ -221,7 +221,7 @@ List the business in the same few places with exactly the same details. Matching
 Use these details everywhere, character for character:
 
 ```text
-Smoothvault Moves
+Smooth Vault Moves
 07824 101373
 https://smoothvaultmoves.co.uk
 hello@smoothvaultmoves.co.uk

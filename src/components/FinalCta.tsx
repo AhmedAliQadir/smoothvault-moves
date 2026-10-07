@@ -11,7 +11,7 @@ export function FinalCta() {
         </h2>
         <p>Tell us where, when and what — we’ll come back with a clear, all-in price.</p>
         <div className="final__ctas">
-          <a className="btn btn--cta" href={whatsappLink('Hi Smoothvault Moves, I would like a quote.')} target="_blank" rel="noopener">
+          <a className="btn btn--cta" href={whatsappLink('Hi Smooth Vault Moves, I would like a quote.')} target="_blank" rel="noopener">
             <WhatsAppIcon width={20} height={20} /> Message us on WhatsApp
           </a>
           <a className="btn btn--on-navy" href={`tel:${site.phoneE164}`}>

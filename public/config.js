@@ -1,5 +1,5 @@
 /*
-  Smoothvault Moves — website settings
+  Smooth Vault Moves — website settings
   ------------------------------------
   Edit the values between the quotes, save, then redeploy the site.
   Leave a value as "" if you don't have it yet — the site hides anything that's empty.

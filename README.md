@@ -68,7 +68,7 @@ At build time `scripts/prerender.mjs` writes a snapshot of the home page into `d
 
 ## Deploying
 
-`npm run build` produces a static site in `dist/`, including `_headers` and `_redirects` for Cloudflare Pages or Netlify. The launch playbook recommends Cloudflare Pages; connecting this GitHub repository there (build command `npm run build`, output directory `dist`) deploys on every push.
+`npm run build` produces a static site in `dist/`, including `_headers` and `_redirects` for Cloudflare Pages. The site is deployed by connecting this repository to Cloudflare Pages (production branch `master`, build command `npm run build`, output directory `dist`; Node comes from `.node-version`). Every push to `master` goes live, and other branches get preview addresses. Full steps: [launch playbook, Step 1](docs/launch-playbook.md#step-1-put-the-website-live).
 
 ## Brand
 

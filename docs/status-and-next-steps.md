@@ -63,6 +63,6 @@ On the front, "Or visit" and the address now sit below the QR code instead of be
 ## Suggested order of work
 
 1. Make the remaining launch decisions at the top of the [playbook](launch-playbook.md), then fill in `public/config.js`.
-2. Connect this repo to Cloudflare Pages (build `npm run build`, output `dist`) so every push deploys.
+2. Merge this branch into `master`, then connect the repo to Cloudflare Pages (playbook, Step 1) so every push to `master` deploys.
 3. Print the review cards once `/review/` has its review links.
 4. Work through the playbook: business email, Google Business Profile, Trustpilot, then the Trustpilot widget on the site.

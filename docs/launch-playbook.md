@@ -1,8 +1,8 @@
 # Smooth Vault Moves — Launch Playbook
 
 > Imported on 7 October 2026 from the Claude Docs artifact [Smoothvault Moves — Launch Playbook](https://claude.ai/artifact/1ZoKmdehhJ6oe1rrRSQa2n), last edited 6 October 2026.
-> References to `smoothvault-site.zip`, `config.js` and uploading the `site` folder now map to this repo: settings live in
-> `public/config.js`, and `npm run build` produces the folder to upload (`dist/`). See [status-and-next-steps.md](status-and-next-steps.md).
+> Step 1 has been updated to deploy from this GitHub repository. Other references to `smoothvault-site.zip` and `config.js` map to this repo:
+> settings live in `public/config.js`, and `npm run build` produces the site in `dist/`. See [status-and-next-steps.md](status-and-next-steps.md).
 
 6 October 2026 · Ahmed
 
@@ -45,13 +45,20 @@ Host the site on Cloudflare Pages: it's free, Pages is still fully supported for
 
 1. Create a free Cloudflare account and add the site `smoothvaultmoves.co.uk` on the Free plan.
 2. Cloudflare shows two nameservers. Log in where the domain was bought (check the purchase email) and replace its nameservers with Cloudflare's. A .co.uk domain usually switches within a few hours.
-3. In Cloudflare, go to Workers & Pages, create a Pages project, choose to upload assets directly, name it `smoothvault-moves`, and drop in the unzipped `site` folder. You get a test address ending in `pages.dev`.
+3. In Cloudflare, go to Workers & Pages → Create application → Pages → Connect to Git. Allow Cloudflare's GitHub app access to the `smoothvault-moves` repository only, then pick it. Set:
+   - Project name: `smoothvault-moves`
+   - Production branch: `master`
+   - Framework preset: None
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+
+   Save and deploy. The first build takes about a minute, and you get a test address ending in `pages.dev`. Cloudflare reads the Node version from `.node-version` in the repo.
 4. In the project's Custom domains, add both `smoothvaultmoves.co.uk` and `www.smoothvaultmoves.co.uk`. Cloudflare creates the DNS records and the HTTPS certificate.
 5. Add a redirect rule that sends `www` to the plain domain, so Google sees one address.
 6. Test on a phone: the WhatsApp buttons open a chat with 07824 101373, the quote form opens WhatsApp with the answers, the footer links work, and a link shared in WhatsApp shows the preview image.
 7. Add the domain to Google Search Console (verify with a DNS record, which takes a minute on Cloudflare) and submit `https://smoothvaultmoves.co.uk/sitemap.xml`. Then import it into Bing Webmaster Tools.
 
-To update the site later, edit the files (usually just `config.js`) and upload the folder again as a new deployment.
+To update the site later, change the files in the repo (usually just `public/config.js`). Every push to `master` redeploys the live site; pushes to other branches get their own preview address, so changes can be checked before they go live.
 
 Netlify also works with the same files. On its free plan for new accounts, each deploy uses 15 of 300 monthly credits and the site pauses when credits run out, so it's less suited to a business site.
 

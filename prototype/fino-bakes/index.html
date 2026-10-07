@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fino Bakes</title>
+<meta name="description" content="Cheesecakes, tiramisu and dessert cups, made fresh to order. Collection only from Walsall, Birmingham.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: one fixed 3D stage behind the page; each section sets where the desserts sit and the copy fills the other side. */
+:root{
+  --sugar:#F6EEEB;      /* page ground, a blush of icing sugar */
+  --sugar-2:#EDE0DB;    /* panels and big background words */
+  --espresso:#2A1B17;   /* ink, from the logo line */
+  --cocoa:#6E5147;      /* secondary text */
+  --berry:#A3304A;      /* raspberry coulis accent */
+  --biscuit:#B98552;    /* biscuit base, used for small marks */
+  --line:rgba(42,27,23,.16);
+  --glass:rgba(246,238,235,.78);
+  --on-berry:#FFF6F3;
+  --display:"Italiana","Didot","Bodoni 72",Georgia,serif;
+  --body:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;
+  --gutter:clamp(16px,4vw,56px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sugar:#1A1311;--sugar-2:#261C19;--espresso:#F3E7E1;--cocoa:#C2A89E;--berry:#E57D93;--biscuit:#D6A874;
+  --line:rgba(243,231,225,.16);--glass:rgba(26,19,17,.78);--on-berry:#1A1311;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sugar:#1A1311;--sugar-2:#261C19;--espresso:#F3E7E1;--cocoa:#C2A89E;--berry:#E57D93;--biscuit:#D6A874;
+  --line:rgba(243,231,225,.16);--glass:rgba(26,19,17,.78);--on-berry:#1A1311;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--sugar);color:var(--espresso);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:.005em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--berry);outline-offset:3px;border-radius:4px}
+.eyebrow{font:500 12px/1.4 var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--cocoa)}
+
+/* Logo is used as a mask so it takes the ink colour in both themes */
+.logo{display:block;background:var(--espresso);-webkit-mask:url(logo.png) center/contain no-repeat;mask:url(logo.png) center/contain no-repeat}
+.logo-mark{display:block;background:var(--espresso);-webkit-mask:url(logo-mark.png) center/contain no-repeat;mask:url(logo-mark.png) center/contain no-repeat}
+
+/* 3D stage */
+#stage{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:block}
+.no-webgl #stage,.no-webgl .spin-zone{display:none}
+
+/* Header */
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:calc(env(safe-area-inset-top,0px) + 10px) var(--gutter) 10px;display:flex;align-items:center;gap:24px;
+  background:linear-gradient(var(--sugar),transparent);transition:background .3s}
+.top.scrolled{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .logo-mark{width:46px;height:60px}
+.top nav{display:flex;gap:28px;margin-left:auto;font-size:15px}
+.top nav a{text-decoration:none;color:var(--cocoa)}
+.top nav a:hover{color:var(--espresso)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 24px;border-radius:999px;font:500 15px/1 var(--body);letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1px solid var(--espresso);background:transparent;color:var(--espresso);transition:background .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.solid{background:var(--espresso);color:var(--sugar)}
+.btn.berry{background:var(--berry);border-color:var(--berry);color:var(--on-berry)}
+@media (max-width:760px){.top nav{display:none}.top .btn{margin-left:auto;min-height:40px;padding:0 18px}}
+
+/* Sections: copy sits above the canvas (z 2); big words sit beneath it (z 0) */
+section{position:relative;padding-inline:var(--gutter)}
+.content{position:relative;z-index:2}
+.bigword{position:absolute;z-index:0;font-family:var(--display);font-size:clamp(90px,17vw,300px);line-height:.8;color:var(--sugar-2);white-space:nowrap;pointer-events:none;user-select:none}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;max-width:1240px;margin:0 auto;min-height:100svh;padding-block:110px 60px}
+.split>*{min-width:0}
+.split .copy{display:grid;gap:22px;max-width:30rem}
+.split.flip .copy{grid-column:2}
+.spin-zone{position:relative;z-index:2;align-self:stretch;min-height:320px;cursor:grab;touch-action:pan-y}
+.spin-zone:active{cursor:grabbing}
+.split.flip .spin-zone{grid-column:1;grid-row:1}
+.spin-hint{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cocoa);white-space:nowrap}
+
+/* Hero */
+.hero .split{min-height:clamp(600px,96svh,940px);padding-block:100px 40px}
+.hero .logo{width:clamp(150px,17vw,210px);aspect-ratio:460/668;margin-bottom:6px}
+.hero h1{font-size:clamp(46px,6.4vw,92px)}
+.hero h1 em{font-style:normal;color:var(--berry)}
+.lede{font-size:clamp(17px,1.4vw,19px);color:var(--cocoa);max-width:30rem;font-weight:300}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--cocoa);padding-top:6px}
+.facts span{display:inline-flex;align-items:center;gap:8px}
+.facts span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--berry)}
+
+.ticker{position:relative;z-index:2;overflow:hidden;border-block:1px solid var(--line);padding-block:14px;margin-inline:calc(var(--gutter) * -1)}
+.ticker-track{display:flex;width:max-content;gap:40px;animation:tick 38s linear infinite;font-family:var(--display);font-size:26px;white-space:nowrap}
+.ticker-track span{display:inline-flex;align-items:center;gap:40px}
+.ticker-track span::after{content:"✦";font-size:13px;color:var(--berry)}
+@keyframes tick{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+
+/* Layers (sticky) */
+.layers{height:260svh;padding:0}
+.layers .sticky{position:sticky;top:0;z-index:2;height:100svh;display:grid;grid-template-columns:1fr 1fr;max-width:1240px;margin:0 auto;padding:100px var(--gutter) 40px;align-items:center;gap:40px}
+.layers .copy{grid-column:2;display:grid;gap:26px;max-width:30rem}
+.layers h2{font-size:clamp(40px,5vw,72px)}
+.steps-list{list-style:none;margin:0;padding:0;display:grid;gap:4px;border-left:1px solid var(--line)}
+.steps-list li{padding:12px 0 12px 22px;position:relative;opacity:.45;transition:opacity .4s}
+.steps-list li::before{content:"";position:absolute;left:-4px;top:22px;width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .4s,transform .4s}
+.steps-list li.on{opacity:1}
+.steps-list li.on::before{background:var(--berry);transform:scale(1.5)}
+.steps-list b{display:block;font-weight:500;font-size:18px}
+.steps-list span{color:var(--cocoa);font-size:15px}
+.no-webgl .steps-list li{opacity:1}
+
+/* Products */
+.product h2{font-size:clamp(46px,6vw,88px)}
+.product .bigword{top:50%;transform:translateY(-50%)}
+.product .bigword.r{right:-2vw}.product .bigword.l{left:-2vw}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--espresso);font:400 15px/1 var(--body);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,background .2s}
+.chip i{width:12px;height:12px;border-radius:50%;background:var(--sw)}
+.chip:hover{border-color:var(--espresso)}
+.chip[aria-pressed="true"],.chip:has(input:checked){border-color:var(--espresso);background:var(--sugar-2)}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:focus-visible){outline:2px solid var(--berry);outline-offset:2px}
+.note{font-size:13px;color:var(--cocoa)}
+.detail{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--cocoa);border-top:1px solid var(--line);padding-top:16px}
+
+/* How it works */
+.how{padding-block:clamp(300px,52svh,520px) 120px}
+.how .content{max-width:1240px;margin:0 auto;display:grid;gap:40px}
+.how h2{font-size:clamp(40px,5vw,72px);max-width:14ch}
+.how ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.how li{display:grid;gap:10px;padding:28px;border-radius:22px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.how li .n{font-family:var(--display);font-size:44px;line-height:1;color:var(--berry)}
+.how li h3{font-family:var(--body);font-weight:500;font-size:20px}
+.how li p{color:var(--cocoa);font-size:15px}
+@media (max-width:860px){.how ol{grid-template-columns:1fr}}
+
+/* Order */
+.order .split{align-items:start;padding-block:120px 80px}
+.order h2{font-size:clamp(42px,5vw,72px)}
+.order .copy{max-width:34rem}
+form{display:grid;gap:18px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+legend,label.lbl{font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa);padding:0;margin-bottom:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row>*{min-width:0}
+.field{display:grid;gap:8px}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sugar);color:var(--espresso);font:400 16px/1.4 var(--body)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--berry);outline-offset:1px}
+textarea{min-height:84px;resize:vertical}
+.preview{display:grid;gap:10px;padding:20px;border-radius:20px;background:var(--sugar-2);border:1px solid var(--line)}
+.preview textarea{background:transparent;border:0;padding:0;min-height:150px;font-size:15px;color:var(--espresso);resize:none}
+.preview .actions{gap:10px}
+.status{font-size:14px;color:var(--cocoa);min-height:1.4em}
+.order-visual{position:sticky;top:120px;min-height:420px}
+
+/* Footer */
+footer{position:relative;z-index:2;border-top:1px solid var(--line);background:var(--sugar);padding:60px var(--gutter) calc(40px + env(safe-area-inset-bottom,0px))}
+footer .inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:end}
+footer .logo{width:120px;aspect-ratio:460/668}
+footer p{color:var(--cocoa);font-size:15px}
+footer .small{font-size:13px}
+@media (max-width:760px){footer .inner{grid-template-columns:1fr;justify-items:start}}
+
+/* Narrow screens: desserts sit at the top of the view, copy below */
+@media (max-width:860px){
+  .split,.split.flip{grid-template-columns:1fr;min-height:auto;padding-block:0 70px}
+  .split .copy,.split.flip .copy{grid-column:1}
+  .spin-zone,.split.flip .spin-zone{grid-column:1;grid-row:1;min-height:46svh}
+  .hero .split{padding-top:70px;min-height:auto}
+  .hero .logo{display:none}
+  .product .split{padding-top:0}
+  .product .bigword{top:23svh}
+  .layers{height:240svh}
+  .layers .sticky{grid-template-columns:1fr;align-items:end;padding-bottom:28px}
+  .layers .copy{grid-column:1;gap:16px;background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:18px;border-radius:20px;border:1px solid var(--line)}
+  .layers .steps-list li{padding-block:6px}
+  .how{padding-top:44svh}
+  .order .split{padding-top:100px}
+  .order-visual{display:none}
+  .row{grid-template-columns:1fr}
+}
+.no-webgl .spin-zone{display:none}
+@media (max-width:860px){.no-webgl .hero .logo{display:block}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="top" id="top">
+  <a href="#home" aria-label="Fino Bakes, back to top"><span class="logo-mark" role="img" aria-label="Fino Bakes"></span></a>
+  <nav aria-label="Main">
+    <a href="#cheesecakes">Cheesecakes</a>
+    <a href="#tiramisu">Tiramisu</a>
+    <a href="#cups">Dessert cups</a>
+    <a href="#how">How it works</a>
+  </nav>
+  <a class="btn solid" href="#order">Order</a>
+</header>
+
+<main>
+  <section class="hero" id="home" data-scene="hero">
+    <div class="split">
+      <div class="copy content">
+        <span class="logo" role="img" aria-label="Fino Bakes, all the delight"></span>
+        <p class="eyebrow">Cheesecakes · Tiramisu · Dessert cups</p>
+        <h1>Dessert, made <em>fresh</em> for your order.</h1>
+        <p class="lede">Every order is made from scratch for the day you collect it, in our kitchen in Walsall, Birmingham.</p>
+        <div class="actions">
+          <a class="btn berry" href="#order">Start an order</a>
+          <a class="btn" href="#cheesecakes">See the desserts</a>
+        </div>
+        <div class="facts"><span>Made to order</span><span>Collection only</span><span>Walsall, Birmingham</span></div>
+      </div>
+      <div class="spin-zone" aria-hidden="true"><span class="spin-hint">Drag to turn</span></div>
+    </div>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Made fresh to order</span><span>Cheesecakes</span><span>Tiramisu</span><span>Dessert cups</span><span>Collection only</span><span>Walsall, Birmingham</span>
+        <span>Made fresh to order</span><span>Cheesecakes</span><span>Tiramisu</span><span>Dessert cups</span><span>Collection only</span><span>Walsall, Birmingham</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="layers" id="layers" data-scene="layers">
+    <div class="sticky">
+      <div class="copy">
+        <p class="eyebrow">How a cheesecake comes together</p>
+        <h2>Layer by layer, for your day.</h2>
+        <ol class="steps-list" id="layer-steps">
+          <li class="on"><b>Biscuit base</b><span>Crushed biscuits and melted butter, pressed firm.</span></li>
+          <li><b>Cream cheese filling</b><span>Whipped smooth, then left to set.</span></li>
+          <li><b>Topping</b><span>Fruit, caramel or cookie, added before you collect.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="product" id="cheesecakes" data-scene="cheesecake">
+    <span class="bigword l" aria-hidden="true">Cheesecake</span>
+    <div class="split flip">
+      <div class="copy content">
+        <p class="eyebrow">01 · Cheesecakes</p>
+        <h2>Cheesecakes</h2>
+        <p class="lede">Smooth, set cream cheese on a crunchy biscuit base. Made whole, for birthdays, family dinners or a Friday night.</p>
+        <div class="field">
+          <span class="lbl" style="font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa)">Preview a topping</span>
+          <div class="chips" data-flavours="cheesecake">
+            <button type="button" class="chip" aria-pressed="true" data-flavour="Raspberry" style="--sw:#A51E3A"><i></i>Raspberry</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Biscoff" style="--sw:#A8642B"><i></i>Biscoff</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Mango" style="--sw:#F0A126"><i></i>Mango</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Oreo" style="--sw:#2B2220"><i></i>Oreo</button>
+          </div>
+          <p class="note">Example flavours. Ask us what's on this week.</p>
+        </div>
+        <div class="actions"><a class="btn solid" href="#order" data-pick="Cheesecake">Order a cheesecake</a></div>
+      </div>
+      <div class="spin-zone" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="product" id="tiramisu" data-scene="tiramisu">
+    <span class="bigword r" aria-hidden="true">Tiramisu</span>
+    <div class="split">
+      <div class="copy content">
+        <p class="eyebrow">02 · Tiramisu</p>
+        <h2>Tiramisu</h2>
+        <p class="lede">Sponge fingers soaked in coffee, layered with mascarpone cream and finished with a thick dusting of cocoa.</p>
+        <div class="actions">
+          <button type="button" class="btn" id="tira-layers" aria-pressed="false">Show the layers</button>
+          <a class="btn solid" href="#order" data-pick="Tiramisu">Order tiramisu</a>
+        </div>
+      </div>
+      <div class="spin-zone" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="product" id="cups" data-scene="cup">
+    <span class="bigword l" aria-hidden="true">Dessert cups</span>
+    <div class="split flip">
+      <div class="copy content">
+        <p class="eyebrow">03 · Dessert cups</p>
+        <h2>Dessert cups</h2>
+        <p class="lede">Crumb, cream and fruit layered in a cup and topped with a swirl. One each, ready for a spoon. Easy for parties.</p>
+        <div class="field">
+          <span class="lbl" style="font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa)">Preview a flavour</span>
+          <div class="chips" data-flavours="cup">
+            <button type="button" class="chip" aria-pressed="true" data-flavour="Mixed berry" style="--sw:#A51E3A"><i></i>Mixed berry</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Biscoff" style="--sw:#A8642B"><i></i>Biscoff</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Mango" style="--sw:#F0A126"><i></i>Mango</button>
+            <button type="button" class="chip" aria-pressed="false" data-flavour="Chocolate" style="--sw:#4A2B1D"><i></i>Chocolate</button>
+          </div>
+          <p class="note">Example flavours. Ask us what's on this week.</p>
+        </div>
+        <div class="actions"><a class="btn solid" href="#order" data-pick="Dessert cups">Order dessert cups</a></div>
+      </div>
+      <div class="spin-zone" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="how" id="how" data-scene="how">
+    <div class="content">
+      <p class="eyebrow">How ordering works</p>
+      <h2>Order ahead, we make it, you collect.</h2>
+      <ol>
+        <li><span class="n">1</span><h3>Send your order</h3><p>Pick your dessert, flavour and collection day, then send it to us on WhatsApp.</p></li>
+        <li><span class="n">2</span><h3>We make it fresh</h3><p>Nothing waits on a shelf. Your order is made for the day you collect it.</p></li>
+        <li><span class="n">3</span><h3>Collect in Walsall</h3><p>We'll confirm your collection time and address when we accept the order.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="order" id="order" data-scene="order">
+    <div class="split">
+      <div class="order-visual spin-zone" aria-hidden="true"></div>
+      <div class="copy content">
+        <p class="eyebrow">Start an order</p>
+        <h2>What can we make for you?</h2>
+        <form id="order-form" novalidate>
+          <fieldset>
+            <legend>Dessert</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="product" id="p-cheesecake" value="Cheesecake" checked>Cheesecake</label>
+              <label class="chip"><input type="radio" name="product" id="p-tiramisu" value="Tiramisu">Tiramisu</label>
+              <label class="chip"><input type="radio" name="product" id="p-cups" value="Dessert cups">Dessert cups</label>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="field"><label class="lbl" for="flavour">Flavour</label><select id="flavour" name="flavour"></select></div>
+            <div class="field"><label class="lbl" for="qty" id="qty-label">How many</label><input id="qty" name="qty" type="number" min="1" max="60" value="1" inputmode="numeric"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label class="lbl" for="date">Collection day</label><input id="date" name="date" type="date"></div>
+            <div class="field"><label class="lbl" for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. Sana"></div>
+          </div>
+          <div class="field"><label class="lbl" for="notes">Anything else</label><textarea id="notes" name="notes" placeholder="Message on top, allergies, occasion…"></textarea></div>
+          <div class="preview">
+            <label class="lbl" for="message">Your message</label>
+            <textarea id="message" readonly></textarea>
+            <div class="actions">
+              <a class="btn berry" id="send" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+              <button type="button" class="btn" id="copy">Copy message</button>
+            </div>
+            <p class="status" id="status" role="status"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">
+    <span class="logo" role="img" aria-label="Fino Bakes, all the delight"></span>
+    <div>
+      <p>Cheesecakes, tiramisu and dessert cups, made fresh to order.</p>
+      <p>Walsall, Birmingham, UK · Collection only</p>
+    </div>
+    <p class="small">© <span id="yr">2026</span> Fino Bakes</p>
+  </div>
+</footer>
+
+<script>
+/* Page behaviour that works with or without 3D: flavour chips, the order form and the header. */
+(function(){
+  // Add the shop's WhatsApp number here, in international format without "+" (e.g. "447700900123").
+  var WHATSAPP_NUMBER = "";
+
+  var fino = window.fino = window.fino || {};
+  fino.flavour = {cheesecake:"Raspberry", cup:"Mixed berry"};
+  fino.order = "Cheesecake";
+  fino.tiraOpen = false;
+  var emit = function(){ window.dispatchEvent(new CustomEvent("fino:change")); };
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  var top = document.getElementById("top");
+  var onScroll = function(){ top.classList.toggle("scrolled", window.scrollY > 40); };
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  document.querySelectorAll("[data-flavours]").forEach(function(group){
+    var key = group.getAttribute("data-flavours");
+    group.addEventListener("click", function(e){
+      var b = e.target.closest(".chip"); if(!b) return;
+      group.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", String(c === b)); });
+      fino.flavour[key] = b.getAttribute("data-flavour"); emit();
+    });
+  });
+
+  var tb = document.getElementById("tira-layers");
+  tb.addEventListener("click", function(){
+    fino.tiraOpen = !fino.tiraOpen;
+    tb.setAttribute("aria-pressed", String(fino.tiraOpen));
+    tb.textContent = fino.tiraOpen ? "Put it back together" : "Show the layers";
+    emit();
+  });
+
+  // Order form
+  var FLAVOURS = {
+    "Cheesecake":["Raspberry","Biscoff","Mango","Oreo","Ask me what's on"],
+    "Tiramisu":["Classic","Ask me what's on"],
+    "Dessert cups":["Mixed berry","Biscoff","Mango","Chocolate","Ask me what's on"]
+  };
+  var form = document.getElementById("order-form");
+  var flavour = document.getElementById("flavour");
+  var qty = document.getElementById("qty");
+  var qtyLabel = document.getElementById("qty-label");
+  var date = document.getElementById("date");
+  var msg = document.getElementById("message");
+  var send = document.getElementById("send");
+  var status = document.getElementById("status");
+
+  var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  date.min = d.toISOString().slice(0,10);
+
+  function fillFlavours(product, keep){
+    flavour.innerHTML = "";
+    FLAVOURS[product].forEach(function(f){ var o=document.createElement("option"); o.textContent=f; flavour.appendChild(o); });
+    if(keep && FLAVOURS[product].indexOf(keep) > -1) flavour.value = keep;
+    qtyLabel.textContent = product === "Dessert cups" ? "How many cups" : product === "Tiramisu" ? "How many portions" : "How many cakes";
+  }
+  function product(){ return form.querySelector("input[name=product]:checked").value; }
+  function build(){
+    var p = product(), n = Math.max(1, parseInt(qty.value,10) || 1);
+    var lines = ["Hi Fino Bakes! I'd like to order:", "• " + p + " (" + flavour.value + ") × " + n];
+    if(date.value){
+      var dt = new Date(date.value + "T12:00:00");
+      lines.push("Collection: " + dt.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}));
+    } else lines.push("Collection: (day to confirm)");
+    var nm = document.getElementById("name").value.trim();
+    var nt = document.getElementById("notes").value.trim();
+    if(nt) lines.push("Notes: " + nt);
+    if(nm) lines.push("Name: " + nm);
+    msg.value = lines.join("\n");
+    send.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg.value);
+    if(fino.order !== p){ fino.order = p; emit(); }
+  }
+  form.addEventListener("change", function(e){
+    if(e.target.name === "product") fillFlavours(product());
+    build();
+  });
+  form.addEventListener("input", build);
+  form.addEventListener("submit", function(e){ e.preventDefault(); });
+
+  document.querySelectorAll("[data-pick]").forEach(function(a){
+    a.addEventListener("click", function(){
+      var p = a.getAttribute("data-pick");
+      form.querySelector("input[value='" + p + "']").checked = true;
+      var key = p === "Cheesecake" ? "cheesecake" : p === "Dessert cups" ? "cup" : null;
+      fillFlavours(p, key ? fino.flavour[key] : null);
+      build();
+    });
+  });
+
+  document.getElementById("copy").addEventListener("click", function(){
+    var done = function(){ status.textContent = "Copied. Paste it into a message to us."; };
+    var fallback = function(){ msg.focus(); msg.select(); status.textContent = "Message selected. Copy it with your keyboard or the menu."; };
+    try { navigator.clipboard.writeText(msg.value).then(done, fallback); } catch(err){ fallback(); }
+  });
+
+  fillFlavours("Cheesecake"); build();
+})();
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+
+const root = document.documentElement;
+const canvas = document.getElementById("stage");
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+} catch (err) {
+  root.classList.add("no-webgl");
+  throw err;
+}
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+scene.environmentIntensity = 0.75;
+
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+
+scene.add(new THREE.HemisphereLight(0xfff3ec, 0x6e5147, 0.7));
+const key = new THREE.DirectionalLight(0xfff0e4, 2.4);
+key.position.set(4, 8, 6);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
+key.shadow.bias = -0.0005;
+key.shadow.normalBias = 0.02;
+key.shadow.radius = 4;
+scene.add(key);
+const rim = new THREE.DirectionalLight(0xffd8e0, 1.3);
+rim.position.set(-6, 3, -5);
+scene.add(rim);
+
+/* ---------- materials ---------- */
+function noiseTexture(size = 256, count = 2600) {
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const g = c.getContext("2d");
+  g.fillStyle = "#808080"; g.fillRect(0, 0, size, size);
+  for (let i = 0; i < count; i++) {
+    const v = (Math.random() * 255) | 0;
+    g.fillStyle = `rgb(${v},${v},${v})`;
+    g.beginPath(); g.arc(Math.random() * size, Math.random() * size, Math.random() * 2.2 + 0.4, 0, 7); g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(3, 3);
+  return t;
+}
+const crumb = noiseTexture();
+const dust = noiseTexture(256, 5000);
+
+const M = {
+  plate: new THREE.MeshPhysicalMaterial({ color: 0xfbf7f4, roughness: 0.22, clearcoat: 0.8, clearcoatRoughness: 0.15 }),
+  biscuit: new THREE.MeshStandardMaterial({ color: 0xb98552, roughness: 0.95, bumpMap: crumb, bumpScale: 3 }),
+  filling: new THREE.MeshPhysicalMaterial({ color: 0xf3e6d3, roughness: 0.55, sheen: 0.5, sheenColor: 0xffffff }),
+  topping: new THREE.MeshPhysicalMaterial({ color: 0xa51e3a, roughness: 0.16, clearcoat: 1, clearcoatRoughness: 0.08 }),
+  berry: new THREE.MeshPhysicalMaterial({ color: 0xb0173a, roughness: 0.35, clearcoat: 0.6 }),
+  mint: new THREE.MeshStandardMaterial({ color: 0x4f8f3a, roughness: 0.5, side: THREE.DoubleSide }),
+  cookie: new THREE.MeshStandardMaterial({ color: 0xb5743a, roughness: 0.85, bumpMap: crumb, bumpScale: 1.5 }),
+  sponge: new THREE.MeshStandardMaterial({ color: 0x8e5a33, roughness: 0.9, bumpMap: crumb, bumpScale: 3 }),
+  cream: new THREE.MeshPhysicalMaterial({ color: 0xf2e6d2, roughness: 0.6, sheen: 0.5, sheenColor: 0xffffff }),
+  cocoa: new THREE.MeshStandardMaterial({ color: 0x4b2a1c, roughness: 1, bumpMap: dust, bumpScale: 4 }),
+  bean: new THREE.MeshPhysicalMaterial({ color: 0x3a2016, roughness: 0.3, clearcoat: 0.8 }),
+  choc: new THREE.MeshPhysicalMaterial({ color: 0x3d2219, roughness: 0.35, clearcoat: 0.5 }),
+  glass: new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 1, roughness: 0.04, thickness: 0.15, ior: 1.45, specularIntensity: 1 }),
+  crumble: new THREE.MeshStandardMaterial({ color: 0xb98552, roughness: 0.95, bumpMap: crumb, bumpScale: 3 }),
+  compote: new THREE.MeshPhysicalMaterial({ color: 0xa51e3a, roughness: 0.2, clearcoat: 1 }),
+  swirl: new THREE.MeshPhysicalMaterial({ color: 0xfaf3ea, roughness: 0.5, sheen: 0.6, sheenColor: 0xffffff }),
+};
+
+const mesh = (geo, mat, cast = true, receive = true) => {
+  const m = new THREE.Mesh(geo, mat);
+  m.castShadow = cast; m.receiveShadow = receive;
+  return m;
+};
+
+/* ---------- geometry helpers ---------- */
+function sector(r, h, a0, len, bevel = 0.03) {
+  const s = new THREE.Shape();
+  if (len >= Math.PI * 2 - 1e-3) s.absarc(0, 0, r, 0, Math.PI * 2, false);
+  else { s.moveTo(0, 0); s.absarc(0, 0, r, a0, a0 + len, false); s.lineTo(0, 0); }
+  const g = new THREE.ExtrudeGeometry(s, { depth: Math.max(0.001, h - bevel * 2), bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments: 96 });
+  g.rotateX(-Math.PI / 2);
+  g.translate(0, bevel, 0);
+  return g;
+}
+function plateGeometry(r = 1.7) {
+  const p = [[0, 0], [r * 0.82, 0], [r * 0.86, 0.02], [r * 0.97, 0.07], [r, 0.11], [r * 0.985, 0.125], [r * 0.95, 0.1], [r * 0.85, 0.055], [0, 0.05]]
+    .map(([x, y]) => new THREE.Vector2(x, y));
+  return new THREE.LatheGeometry(p, 96);
+}
+function contactShadow(r) {
+  const c = document.createElement("canvas"); c.width = c.height = 128;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, "rgba(42,27,23,.42)"); grad.addColorStop(.55, "rgba(42,27,23,.16)"); grad.addColorStop(1, "rgba(42,27,23,0)");
+  g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(r * 2, r * 2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2; m.position.y = -0.005;
+  return m;
+}
+function shadowCatcher(r) {
+  const m = new THREE.Mesh(new THREE.CircleGeometry(r, 48), new THREE.ShadowMaterial({ opacity: 0.18 }));
+  m.rotation.x = -Math.PI / 2; m.position.y = 0.001; m.receiveShadow = true;
+  return m;
+}
+const leafGeo = (() => {
+  const s = new THREE.Shape();
+  s.moveTo(0, 0); s.quadraticCurveTo(0.11, 0.1, 0, 0.26); s.quadraticCurveTo(-0.11, 0.1, 0, 0);
+  const g = new THREE.ShapeGeometry(s, 12);
+  return g;
+})();
+function mintSprig(scale = 1) {
+  const g = new THREE.Group();
+  [[0.5, 0.0], [-0.6, 0.5], [2.2, 0.35]].forEach(([rot, tilt]) => {
+    const l = mesh(leafGeo, M.mint, true, false);
+    l.rotation.set(-Math.PI / 2 + 0.5 + tilt, 0, rot);
+    g.add(l);
+  });
+  g.scale.setScalar(scale);
+  return g;
+}
+const tmpM = new THREE.Matrix4(), tmpQ = new THREE.Quaternion(), tmpS = new THREE.Vector3(), tmpP = new THREE.Vector3();
+function raspberries(points, size = 1) {
+  const per = 34;
+  const geo = new THREE.SphereGeometry(0.048, 10, 8);
+  const im = new THREE.InstancedMesh(geo, M.berry, points.length * (per + 1));
+  let k = 0;
+  for (const p of points) {
+    tmpM.compose(tmpP.set(p.x, p.y + 0.11 * size, p.z), tmpQ.identity(), tmpS.set(2.0 * size, 2.3 * size, 2.0 * size));
+    im.setMatrixAt(k++, tmpM);
+    for (let i = 0; i < per; i++) {
+      const y = 1 - (i / (per - 1)) * 1.75;
+      const rr = Math.sqrt(Math.max(0, 1 - y * y)), th = i * 2.39996;
+      tmpP.set(p.x + Math.cos(th) * rr * 0.1 * size, p.y + (0.11 + y * 0.125) * size, p.z + Math.sin(th) * rr * 0.1 * size);
+      tmpM.compose(tmpP, tmpQ.identity(), tmpS.setScalar(size));
+      im.setMatrixAt(k++, tmpM);
+    }
+  }
+  im.castShadow = true; im.receiveShadow = true;
+  return im;
+}
+
+/* ---------- cheesecake ---------- */
+function buildCheesecake() {
+  const group = new THREE.Group();
+  group.add(contactShadow(2.1), mesh(plateGeometry(1.75), M.plate, false, true));
+  const body = new THREE.Group(); body.position.y = 0.05; group.add(body);
+  const R = 1.12, GAP = 0.95, MID = -Math.PI / 4;
+  const sliceDir = new THREE.Vector3(Math.cos(MID), 0, -Math.sin(MID));
+  const specs = [{ h: 0.24, mat: M.biscuit, lift: 0 }, { h: 0.6, mat: M.filling, lift: 0.5 }, { h: 0.09, mat: M.topping, lift: 1.05 }];
+  const layers = [];
+  let y = 0;
+  for (const s of specs) {
+    const L = new THREE.Group();
+    L.add(mesh(sector(R, s.h, MID + GAP / 2, Math.PI * 2 - GAP), s.mat));
+    const slice = mesh(sector(R - 0.02, s.h, MID - GAP / 2 + 0.03, GAP - 0.06), s.mat);
+    slice.position.copy(sliceDir).multiplyScalar(0.42);
+    L.add(slice);
+    L.position.y = y;
+    body.add(L);
+    layers.push({ g: L, base: y, lift: s.lift, h: s.h });
+    y += s.h;
+  }
+  // garnish rides on the topping layer
+  const top = layers[2];
+  const garnish = new THREE.Group(); garnish.position.y = top.h; top.g.add(garnish);
+  const pts = [];
+  for (let a = MID + GAP / 2 + 0.3; a < MID + Math.PI * 2 - GAP / 2 - 0.2; a += 0.5) pts.push(new THREE.Vector3(Math.cos(a) * 0.86, 0, -Math.sin(a) * 0.86));
+  const sp = sliceDir.clone().multiplyScalar(0.42 + 0.72);
+  pts.push(new THREE.Vector3(sp.x, 0, sp.z));
+  const berries = new THREE.Group(); berries.add(raspberries(pts));
+  const m1 = mintSprig(1.1); m1.position.set(-0.25, 0.02, 0.1);
+  const m2 = mintSprig(0.8); m2.position.set(sp.x - 0.1, 0.02, sp.z - 0.15); m2.rotation.y = 1;
+  berries.add(m1, m2);
+  garnish.add(berries);
+  const cookies = new THREE.Group();
+  const cookieGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.05, 40);
+  for (let i = 0; i < 6; i++) {
+    const a = MID + GAP / 2 + 0.55 + i * ((Math.PI * 2 - GAP - 1.1) / 5);
+    const c = mesh(cookieGeo, M.cookie);
+    c.position.set(Math.cos(a) * 0.78, 0.14, -Math.sin(a) * 0.78);
+    c.rotation.order = "YXZ"; c.rotation.y = a + Math.PI / 2; c.rotation.x = 1.1;
+    cookies.add(c);
+  }
+  const cs = mesh(cookieGeo, M.cookie); cs.position.set(sp.x, 0.14, sp.z); cs.rotation.order = "YXZ"; cs.rotation.y = MID + Math.PI / 2; cs.rotation.x = 1.1;
+  cookies.add(cs);
+  cookies.scale.setScalar(0.001);
+  garnish.add(cookies);
+  group.add(shadowCatcher(2.2));
+  return { group, layers, berries, cookies };
+}
+
+/* ---------- tiramisu ---------- */
+function buildTiramisu() {
+  const group = new THREE.Group();
+  group.add(contactShadow(2.1), mesh(plateGeometry(1.7), M.plate, false, true));
+  const body = new THREE.Group(); body.position.y = 0.05; body.rotation.y = 0.35; group.add(body);
+  const W = 1.5, D = 1.3;
+  const specs = [[0.2, M.sponge], [0.24, M.cream], [0.2, M.sponge], [0.24, M.cream], [0.05, M.cocoa]];
+  const layers = [];
+  let y = 0;
+  specs.forEach(([h, mat], i) => {
+    const L = new THREE.Group();
+    const m = mesh(new RoundedBoxGeometry(W, h, D, 3, Math.min(0.04, h / 2.2)), mat);
+    m.position.y = h / 2;
+    L.add(m); L.position.y = y; body.add(L);
+    layers.push({ g: L, base: y, lift: i * 0.34, h });
+    y += h;
+  });
+  const garnish = new THREE.Group(); garnish.position.y = 0.05; layers[4].g.add(garnish);
+  const beanGeo = new THREE.SphereGeometry(0.1, 24, 16);
+  [[-0.35, 0.25, 0.4], [0.05, 0.38, -0.3], [0.38, -0.05, 1.2]].forEach(([x, z, r]) => {
+    const b = mesh(beanGeo, M.bean); b.scale.set(1, 0.6, 1.4); b.position.set(x, 0.05, z); b.rotation.y = r; garnish.add(b);
+  });
+  for (let k = 0; k < 4; k++) {
+    const pts = [];
+    for (let i = 0; i <= 30; i++) { const t = i / 30; pts.push(new THREE.Vector3(Math.cos(t * 9) * 0.06, Math.sin(t * 9) * 0.06, t * 0.42 - 0.21)); }
+    const curl = mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.018, 8), M.choc);
+    curl.position.set(-0.4 + k * 0.26, 0.07, -0.35 + (k % 2) * 0.55);
+    curl.rotation.y = k * 0.9;
+    garnish.add(curl);
+  }
+  group.add(shadowCatcher(2.2));
+  return { group, layers };
+}
+
+/* ---------- dessert cup ---------- */
+function buildCup() {
+  const group = new THREE.Group();
+  group.add(contactShadow(1.3));
+  const H = 1.7, R0 = 0.47, R1 = 0.65, B = 0.1;
+  const outer = [[0, 0], [0.47, 0], [0.5, 0.025], [0.69, H], [0.68, H + 0.02], [0.665, H + 0.02], [R1, H], [R0, B], [0, B]];
+  const glass = new THREE.Mesh(new THREE.LatheGeometry(outer.map(([x, y]) => new THREE.Vector2(x, y)), 96), M.glass);
+  glass.renderOrder = 2;
+  const r = y => R0 + (R1 - R0) * (y - B) / (H - B) - 0.008;
+  const band = (y0, y1) => new THREE.LatheGeometry([[0, y0], [r(y0), y0], [r(y1), y1], [0, y1]].map(([x, y]) => new THREE.Vector2(x, y)), 72);
+  const fill = new THREE.Group();
+  [[B, 0.4, M.crumble], [0.4, 0.78, M.cream], [0.78, 0.98, M.compote], [0.98, 1.36, M.cream], [1.36, 1.48, M.crumble], [1.48, 1.62, M.cream]]
+    .forEach(([a, b, m]) => fill.add(mesh(band(a, b), m, false, true)));
+  // piped swirl
+  const prof = [[0, 0], [0.56, 0], [0.6, 0.06], [0.55, 0.15], [0.5, 0.2], [0.53, 0.26], [0.42, 0.36], [0.38, 0.4], [0.4, 0.46], [0.27, 0.56], [0.22, 0.6], [0.2, 0.64], [0.1, 0.72], [0.03, 0.78], [0, 0.79]];
+  const sg = new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 128);
+  const pos = sg.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+    const a = Math.atan2(z, x), k = 1 + 0.08 * Math.sin(8 * a + y * 16) * Math.min(1, (0.79 - y) * 4);
+    pos.setX(i, x * k); pos.setZ(i, z * k);
+  }
+  sg.computeVertexNormals();
+  const swirl = mesh(sg, M.swirl); swirl.position.y = 1.6;
+  const berry = new THREE.Group(); berry.position.set(0.02, 2.33, 0);
+  berry.add(raspberries([new THREE.Vector3(0, 0, 0)], 1.25));
+  const mint = mintSprig(1.1); mint.position.set(-0.12, 2.36, 0.05);
+  group.add(fill, swirl, berry, mint, glass, shadowCatcher(1.6));
+  group.scale.setScalar(0.92);
+  return { group, berry };
+}
+
+/* ---------- assemble ---------- */
+const models = {};
+function holder(built, name) {
+  const h = new THREE.Group(); const spin = new THREE.Group();
+  spin.add(built.group); h.add(spin); scene.add(h);
+  models[name] = { ...built, h, spin, cur: { x: 0, y: 0, z: 0, s: 0, rx: 0.3, ry: 0, e: 0 } };
+}
+holder(buildCheesecake(), "C");
+holder(buildTiramisu(), "T");
+holder(buildCup(), "U");
+
+/* ---------- flavours ---------- */
+const CHEESE = {
+  "Raspberry": { top: 0xa51e3a, fill: 0xf3e6d3, berries: 1, cookies: 0, cookie: 0xb5743a },
+  "Biscoff":   { top: 0xa8642b, fill: 0xf1dfc6, berries: 0, cookies: 1, cookie: 0xb5743a },
+  "Mango":     { top: 0xf0a126, fill: 0xf6e7c9, berries: 0, cookies: 0, cookie: 0xb5743a },
+  "Oreo":      { top: 0x2b2220, fill: 0xe8e1d8, berries: 0, cookies: 1, cookie: 0x231a18 },
+};
+const CUP = {
+  "Mixed berry": { compote: 0xa51e3a, crumble: 0xb98552, berry: 1 },
+  "Biscoff":     { compote: 0xa8642b, crumble: 0xa86b3a, berry: 0 },
+  "Mango":       { compote: 0xf0a126, crumble: 0xc8955c, berry: 0 },
+  "Chocolate":   { compote: 0x4a2b1d, crumble: 0x5a3626, berry: 1 },
+};
+const target = { top: new THREE.Color(), fill: new THREE.Color(), cookie: new THREE.Color(), compote: new THREE.Color(), crumble: new THREE.Color(), berries: 1, cookies: 0, cupBerry: 1 };
+function readFlavours() {
+  const f = window.fino || { flavour: {} };
+  const c = CHEESE[f.flavour.cheesecake] || CHEESE.Raspberry;
+  const u = CUP[f.flavour.cup] || CUP["Mixed berry"];
+  target.top.setHex(c.top); target.fill.setHex(c.fill); target.cookie.setHex(c.cookie);
+  target.berries = c.berries; target.cookies = c.cookies;
+  target.compote.setHex(u.compote); target.crumble.setHex(u.crumble); target.cupBerry = u.berry;
+}
+readFlavours();
+window.addEventListener("fino:change", readFlavours);
+
+/* ---------- scroll choreography ---------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const smooth = t => t * t * (3 - 2 * t);
+const hide = (x, y = -0.5) => ({ x, y, s: 0 });
+const SCENES = {
+  hero: () => ({ C: { x: 1.75, y: -0.6, s: 1, rx: 0.34 }, T: hide(5), U: hide(5) }),
+  layers: t => {
+    const e = smooth(clamp((t - 0.05) / 0.75));
+    return { C: { x: -2.05, y: -0.7 - e * 0.5, s: 0.9, e, rx: 0.2 }, T: hide(5), U: hide(5) };
+  },
+  cheesecake: () => ({ C: { x: -1.6, y: -0.6, s: 1.02, rx: 0.36 }, T: hide(5), U: hide(5) }),
+  tiramisu: () => ({ C: hide(-5), T: { x: 1.65, y: -0.6, s: 1.05, rx: 0.32, e: window.fino && window.fino.tiraOpen ? 1 : 0 }, U: hide(5) }),
+  cup: () => ({ C: hide(-5), T: hide(5), U: { x: -1.65, y: -1.05, s: 1.05, rx: 0.12 } }),
+  how: () => ({ C: { x: -2.7, y: 0.75, s: 0.55, rx: 0.4 }, T: { x: 0, y: 0.75, s: 0.55, rx: 0.4 }, U: { x: 2.7, y: 0.5, s: 0.55, rx: 0.2 } }),
+  order: () => {
+    const o = (window.fino && window.fino.order) || "Cheesecake";
+    const pick = { Cheesecake: "C", Tiramisu: "T", "Dessert cups": "U" }[o];
+    const at = n => n === pick ? { x: -1.9, y: n === "U" ? -0.95 : -0.55, s: 0.95, rx: n === "U" ? 0.14 : 0.34, mh: 1 } : { x: -1.9, y: -0.6, s: 0, mh: 1 };
+    return { C: at("C"), T: at("T"), U: at("U") };
+  },
+};
+const DEF = { x: 0, y: 0, z: 0, s: 0, rx: 0.3, e: 0, mh: 0 };
+const KEYS = ["x", "y", "z", "s", "rx", "e", "mh"];
+const full = st => { const o = {}; for (const n of ["C", "T", "U"]) o[n] = { ...DEF, ...st[n] }; return o; };
+const mix = (a, b, t) => { const o = {}; for (const n in a) { o[n] = {}; for (const k of KEYS) o[n][k] = a[n][k] + (b[n][k] - a[n][k]) * t; } return o; };
+
+let sections = [];
+function measure() {
+  const vh = innerHeight;
+  sections = [...document.querySelectorAll("[data-scene]")].map(el => {
+    const r = el.getBoundingClientRect(), top = r.top + scrollY;
+    const start = top, end = Math.max(top, top + el.offsetHeight - vh);
+    return { el, name: el.dataset.scene, start, end };
+  });
+}
+function stateAt(y) {
+  const S = sections;
+  if (!S.length) return full(SCENES.hero(0));
+  if (y <= S[0].start) return full(SCENES[S[0].name](0));
+  for (let i = 0; i < S.length; i++) {
+    const s = S[i];
+    if (y <= s.end) {
+      const t = s.end > s.start ? (y - s.start) / (s.end - s.start) : 1;
+      return full(SCENES[s.name](clamp(t)));
+    }
+    const n = S[i + 1];
+    if (n && y < n.start) {
+      const u = smooth((y - s.end) / (n.start - s.end));
+      return mix(full(SCENES[s.name](1)), full(SCENES[n.name](0)), u);
+    }
+  }
+  const last = S[S.length - 1];
+  return full(SCENES[last.name](1));
+}
+
+/* layer list highlighting */
+const layerItems = [...document.querySelectorAll("#layer-steps li")];
+function updateLayerList(y) {
+  const s = sections.find(x => x.name === "layers");
+  if (!s) return;
+  const t = s.end > s.start ? clamp((y - s.start) / (s.end - s.start)) : 0;
+  const idx = t < 0.3 ? 0 : t < 0.6 ? 1 : 2;
+  layerItems.forEach((li, i) => li.classList.toggle("on", i <= idx));
+}
+
+/* ---------- interaction: pointer tilt and drag to turn ---------- */
+let pointerX = 0, pointerY = 0, tiltX = 0, tiltY = 0;
+addEventListener("pointermove", e => { pointerX = e.clientX / innerWidth - 0.5; pointerY = e.clientY / innerHeight - 0.5; }, { passive: true });
+let userYaw = 0, yawVel = 0, dragging = null;
+document.querySelectorAll(".spin-zone").forEach(z => {
+  z.addEventListener("pointerdown", e => { dragging = { id: e.pointerId, x: e.clientX }; z.setPointerCapture(e.pointerId); yawVel = 0; });
+  z.addEventListener("pointermove", e => {
+    if (!dragging || dragging.id !== e.pointerId) return;
+    const dx = e.clientX - dragging.x; dragging.x = e.clientX;
+    userYaw += dx * 0.012; yawVel = dx * 0.012 * 60;
+  });
+  const end = () => { dragging = null; };
+  z.addEventListener("pointerup", end); z.addEventListener("pointercancel", end);
+});
+
+/* ---------- layout ---------- */
+let narrow = false;
+function resize() {
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  narrow = w < 860;
+  const fitZ = narrow ? 11.5 + Math.max(0, (0.6 - w / h) * 8) : 10;
+  camera.position.set(0, 1.7, fitZ);
+  camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
+  measure();
+}
+addEventListener("resize", resize);
+resize();
+document.fonts && document.fonts.ready.then(measure);
+addEventListener("load", measure);
+
+function adapt(st) {
+  if (!narrow) return st;
+  return { ...st, x: st.x * 0.32, y: st.y * 0.35 + 1.15, s: st.s * 0.6 * (1 - st.mh) };
+}
+
+/* ---------- loop ---------- */
+const clock = new THREE.Clock();
+let autoYaw = 0, last = -1;
+function frame() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const y = scrollY;
+  const goal = stateAt(y);
+  if (y !== last) { updateLayerList(y); last = y; }
+  const k = 1 - Math.exp(-dt * 6);
+
+  if (!reduceMotion) autoYaw += dt * 0.22;
+  if (!dragging) { userYaw += yawVel * dt; yawVel *= Math.exp(-dt * 3); }
+  tiltX += (pointerX - tiltX) * k; tiltY += (pointerY - tiltY) * k;
+
+  for (const n of ["C", "T", "U"]) {
+    const m = models[n], g = adapt(goal[n]), c = m.cur;
+    for (const key of KEYS) c[key] += (g[key] - c[key]) * k;
+    const s = Math.max(0, c.s);
+    m.h.visible = s > 0.003;
+    m.h.position.set(c.x, c.y, c.z);
+    m.h.scale.setScalar(s);
+    m.h.rotation.x = c.rx * 0.5 + tiltY * 0.12;
+    m.spin.rotation.y = autoYaw + userYaw + tiltX * 0.35 + (n === "T" ? -0.4 : 0);
+    if (m.layers) for (const L of m.layers) L.g.position.y = L.base + L.lift * c.e;
+  }
+
+  // flavour colour easing
+  const fk = 1 - Math.exp(-dt * 5);
+  M.topping.color.lerp(target.top, fk); M.filling.color.lerp(target.fill, fk); M.cookie.color.lerp(target.cookie, fk);
+  M.compote.color.lerp(target.compote, fk); M.crumble.color.lerp(target.crumble, fk);
+  const C = models.C;
+  C.berries.scale.setScalar(Math.max(0.001, C.berries.scale.x + (target.berries - C.berries.scale.x) * fk));
+  C.cookies.scale.setScalar(Math.max(0.001, C.cookies.scale.x + (target.cookies - C.cookies.scale.x) * fk));
+  C.berries.visible = C.berries.scale.x > 0.01; C.cookies.visible = C.cookies.scale.x > 0.01;
+  const ub = models.U.berry;
+  ub.scale.setScalar(Math.max(0.001, ub.scale.x + (target.cupBerry - ub.scale.x) * fk));
+  ub.visible = ub.scale.x > 0.01;
+
+  renderer.render(scene, camera);
+}
+renderer.setAnimationLoop(frame);
+document.addEventListener("visibilitychange", () => renderer.setAnimationLoop(document.hidden ? null : frame));
+</script>
+</body>
+</html>

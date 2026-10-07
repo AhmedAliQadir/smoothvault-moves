@@ -37,7 +37,6 @@ Typecheck, lint and build pass, and `npm audit` reports no vulnerabilities.
 | --- | --- | --- |
 | `config.js` has no company number or registered office yet | The legal line shows only the Privacy and Booking terms links; UK law requires the company details | Fill in `companyNumber`, `registeredIn` and `registeredOffice` (playbook, Step 6) |
 | `mobile3D` is `true` | The playbook measured phone speed at 45/100 with 3D versus 91/100 without, and recommends `false` for launch | Set `mobile3D: false` in `public/config.js` |
-| On the review card front, `smoothvaultmoves.co.uk/review` needs 225 px but the column beside the QR code is 143 px, so it runs 42 px past the card's edge | The address would be cut off when printed | Move "Or visit" and the address below the QR code, where there is 317 px |
 | `/review/` shows only a WhatsApp fallback until review links exist | Customers scanning the card can't leave a Google or Trustpilot review yet | Add `googleReviewUrl` and/or `trustpilotUrl` once the profiles exist |
 | `site.reviews` holds hand-entered reviews | Showing only hand-picked reviews breaks the guidance in the playbook (Step 5) | Leave it empty; add the Trustpilot widget once the profile exists |
 | Two spellings: "Smoothvault Moves" in text, "Smooth Vault" in the logo | Inconsistent name across Google, Trustpilot and directories | Decide before creating the Google profile (playbook, first decision) |
@@ -55,9 +54,13 @@ These don't change what visitors see:
 - Shadows use `PCFShadowMap` directly. Three.js r186 removed `PCFSoftShadowMap` and was already falling back.
 - The frosted header and bars include the unprefixed `backdrop-filter`, so Firefox gets the blur too.
 
+## Changes from the review card design
+
+On the front, "Or visit" and the address now sit below the QR code instead of beside it. Beside it, the address (225 px) was wider than its 143 px column and ran 42 px past the card's edge.
+
 ## Suggested order of work
 
 1. Make the six launch decisions at the top of the [playbook](launch-playbook.md), then fill in `public/config.js`.
 2. Connect this repo to Cloudflare Pages (build `npm run build`, output `dist`) so every push deploys.
-3. Fix the review card overflow, and print once `/review/` has its review links.
+3. Print the review cards once `/review/` has its review links.
 4. Work through the playbook: business email, Google Business Profile, Trustpilot, then the Trustpilot widget on the site.

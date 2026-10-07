@@ -9,8 +9,8 @@
       "Smoothvault Review Card" (https://claude.ai/artifact/8VgKqgFYU6ZNPxaj43W9xo).
       The QR code encodes https://smoothvaultmoves.co.uk/review/ — that page must exist before cards are printed.
       Print from a browser: each side prints on its own A6 page.
-      Known issue (kept from the design): the address beside the QR code is wider than its column and
-      runs past the card edge. See docs/status-and-next-steps.md before printing.
+      Change from the design: "Or visit" and the address sit below the QR code, because beside it the
+      address was wider than its column and ran past the card edge.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&amp;display=swap" />
@@ -62,11 +62,11 @@
           </p>
         </div>
       </div>
-      <div style="display: flex; align-items: flex-end; gap: 18px">
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
         <div style="width: 156px; height: 156px; flex: none; box-sizing: border-box; padding: 10px; background: #fff; border-radius: 14px">
           <img src="../brand/review-qr.png" alt="QR code linking to smoothvaultmoves.co.uk/review" style="width: 136px; height: 136px; display: block" />
         </div>
-        <div style="display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px">
+        <div style="display: flex; flex-direction: column; gap: 6px">
           <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #5aa0e0">Or visit</span>
           <span style="font-size: 15px; font-weight: 600; line-height: 1.3">smoothvaultmoves.co.uk/review</span>
         </div>

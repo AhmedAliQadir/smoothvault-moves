@@ -1,3 +1,4 @@
+import { runtimeConfig } from '../config/runtime'
 import { site } from '../config/site'
 import { whatsappLink } from '../lib/whatsapp'
 import { SectionHead } from './SectionHead'
@@ -38,7 +39,7 @@ export function Reviews() {
             </div>
             <a
               className="btn btn--ghost"
-              href={whatsappLink('Hi, I moved with Smoothvault recently and would like to leave a review.')}
+              href={runtimeConfig().reviewUrl || whatsappLink('Hi, I moved with Smoothvault recently and would like to leave a review.')}
               target="_blank"
               rel="noopener"
             >

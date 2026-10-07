@@ -358,7 +358,13 @@ export function QuoteForm() {
         {step === 'review' && (
           <div className="review-box">
             <pre className="review-box__text">{buildQuoteMessage(quote)}</pre>
-            <p className="hint">Sending opens WhatsApp with this message ready — just press send.</p>
+            <p className="hint">
+              Sending opens WhatsApp with this message ready — just press send. How we use your details:{' '}
+              <a href="/privacy/" target="_blank">
+                privacy notice
+              </a>
+              .
+            </p>
           </div>
         )}
       </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { runtimeConfig } from './config/runtime'
 import { Coverage } from './components/Coverage'
 import { Faq } from './components/Faq'
 import { FinalCta } from './components/FinalCta'
@@ -15,6 +16,16 @@ import { usePrefersReducedMotion } from './hooks/useMediaQuery'
 import { useRevealOnScroll } from './hooks/useRevealOnScroll'
 import { supportsWebGL } from './lib/webgl'
 
+/**
+ * The 3D journey needs WebGL and motion, and on screens under 900px it can be switched off with
+ * `mobile3D: false` in public/config.js. The build-time snapshot (scripts/prerender.mjs) always uses
+ * the 3D layout; the browser renders the real choice when the page loads.
+ */
+function show3D(webgl: boolean, reducedMotion: boolean) {
+  if (typeof window === 'undefined') return true
+  return webgl && !reducedMotion && (runtimeConfig().mobile3D !== false || window.matchMedia('(min-width: 900px)').matches)
+}
+
 export default function App() {
   const reducedMotion = usePrefersReducedMotion()
   const [webgl] = useState(supportsWebGL)
@@ -28,7 +39,7 @@ export default function App() {
       <Header />
       <main id="main">
         <span id="top" />
-        <Hero enable3D={webgl && !reducedMotion} />
+        <Hero enable3D={show3D(webgl, reducedMotion)} />
         <TrustStrip />
         <Services />
         <Storage />

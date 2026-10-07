@@ -1,8 +1,8 @@
 # Smoothvault Moves — Launch Playbook
 
 > Imported on 7 October 2026 from the Claude Docs artifact [Smoothvault Moves — Launch Playbook](https://claude.ai/artifact/1ZoKmdehhJ6oe1rrRSQa2n), last edited 6 October 2026.
-> It describes the **final static build** (`smoothvault-site.zip`, with `config.js`, `/privacy/`, `/terms/`, `/review/`),
-> which is not in this repository yet. See [status-and-next-steps.md](status-and-next-steps.md).
+> References to `smoothvault-site.zip`, `config.js` and uploading the `site` folder now map to this repo: settings live in
+> `public/config.js`, and `npm run build` produces the folder to upload (`dist/`). See [status-and-next-steps.md](status-and-next-steps.md).
 
 6 October 2026 · Ahmed
 

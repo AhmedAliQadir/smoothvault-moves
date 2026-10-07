@@ -1,72 +1,63 @@
 # Status and next steps
 
-The website from the Claude artifact is now editable source in this repo and matches the original; the final version described in the launch playbook (new logo, legal and review pages, `config.js`) is still only in two zip files from the phone chat, and is the main thing to bring in next.
+The repo now holds the final website as editable source: the home page from the Claude artifact plus everything the final `smoothvault-site.zip` added (Vault S logo, legal and review pages, `config.js` settings, SEO). Both were checked against the originals. What's left is mostly decisions and setup from the launch playbook.
 
 Last updated 7 October 2026.
 
 ## Where everything came from
 
-| Source on claude.ai | Last edited | Now in this repo |
+| Source | Last edited | Now in this repo |
 | --- | --- | --- |
 | [Smoothvault Moves](https://claude.ai/artifact/7we3h6QqGXZC4oEcBegLtz) (website artifact) | 4 Oct 2026 | `src/`, rebuilt as React + TypeScript |
+| `smoothvault-site.zip` (final build from the chat) | 6 Oct 2026 | Merged into `src/`, the static pages, `index.html` and `public/` |
 | [Smoothvault Moves — Launch Playbook](https://claude.ai/artifact/1ZoKmdehhJ6oe1rrRSQa2n) (doc) | 6 Oct 2026 | [launch-playbook.md](launch-playbook.md) |
-| [Smoothvault Review Card](https://claude.ai/artifact/8VgKqgFYU6ZNPxaj43W9xo) (design) | 6 Oct 2026 | [review-card/index.html](review-card/index.html), logos and QR code in [brand/](brand) |
-| `smoothvault-site.zip` and `smoothvault-launch-kit.zip` (downloads in the chat) | 6 Oct 2026 | Not here yet, see below |
+| [Smoothvault Review Card](https://claude.ai/artifact/8VgKqgFYU6ZNPxaj43W9xo) (design) | 6 Oct 2026 | [review-card/index.html](review-card/index.html), QR code in [brand/](brand) |
+| `smoothvault-launch-kit.zip` | 6 Oct 2026 | Not here; only the profile pictures in it are missing (logos, icons and the social image came with the site zip) |
 
-The artifact was a single compiled HTML file (fonts, React, Three.js and the site code inlined, 1.2 MB). The source was reconstructed from it and checked:
+## How it was checked
 
-- All 686 text strings in the original site code (copy, class names, SVG paths, colours, labels) appear word for word in `src/`, apart from 3 that belong to React and Three.js themselves.
-- Every number in the 3D scene (positions, sizes, colours, timings, camera keyframes) matches the original.
-- Screenshots of 22 matching desktop and phone views differ by at most 2.5% of pixels, all of it 3D animation timing.
-- The quote wizard gives the same steps, error messages and WhatsApp message, byte for byte.
-- Typecheck, lint and build pass, and `npm audit` reports no vulnerabilities.
+Against the artifact:
+- all 686 text strings and every number in the 3D scene match
+- screenshots match
+- the quote form gives the same WhatsApp message
 
-## Still missing: the final version in the zips
+Against the final zip, after merging:
+- The home page code differed from the artifact in exactly six places, all ported: the Vault S logo, the footer legal line, the privacy link on the quote form's last step, the review button pointing to `/review/`, and `mobile3D` and the Web3Forms key read from `config.js`.
+- The CSS additions were ported as written.
+- Screenshots of 22 home page views and all four static pages, on desktop and phone, match the zip. The static pages and the footer are pixel-identical; the rest differs only in 3D animation timing.
+- With test values in `config.js`, the footer legal line, the privacy page details, the review page buttons, the home page review link and `mobile3D: false` on a phone behave the same as the zip.
+- The quote form output is identical.
+- The pre-rendered `index.html` contains the page text, as the zip's did.
 
-The playbook describes a later static build that went beyond the artifact. None of these are in the repo yet:
-
-- The "Vault S" logo in the header and footer (the logo files are in [brand/](brand); the site still shows the earlier mark)
-- Footer legal line and links, and a privacy link on the quote form
-- `/privacy/` (UK GDPR notice), `/terms/` (booking terms with the 14-day cancellation form), `/review/` (Google and Trustpilot buttons) and a branded `404.html`
-- `config.js` switches: `companyNumber`, `registeredIn`, `registeredOffice`, `googleReviewUrl`, `trustpilotUrl`, `web3formsKey`, `cfAnalyticsToken`, `mobile3D`
-- Page content pre-rendered into the HTML, page titles and descriptions, a social share image, business schema, sitemap and robots file
-- Home-screen icons, `_headers` and `_redirects`
-- From the launch kit: profile pictures (`profile-photo-1024.png`, `og-image.png`)
-
-To bring them in: open yesterday's chat on your phone, download both zips, then attach them in this session or upload them to the repo (for example into a `reference/` folder). I can then port each change into this source, so there is one codebase rather than a separate hand-edited copy.
+Typecheck, lint and build pass, and `npm audit` reports no vulnerabilities.
 
 ## Issues to fix or decide
 
 | Issue | Effect | Suggested fix |
 | --- | --- | --- |
-| The review card QR code points to `smoothvaultmoves.co.uk/review/`, which this version doesn't have | Cards printed now would send customers to a missing page | Don't print until `/review/` is live (comes with the zips) |
-| On the card front, `smoothvaultmoves.co.uk/review` needs 225 px but the column beside the QR code is 143 px, so it runs 42 px past the card's right edge | The address would be cut off when printed | Move "Or visit" and the address below the QR code, where there is 317 px; shrinking it to fit beside the code would take about 9.5 px type |
-| No company number, registered office or legal pages | UK law requires company details on a limited company's website | Bring in the zip version, then fill in the details |
-| The 3D hero always runs on phones | The playbook measured phone speed at 45/100 with 3D versus 91/100 without | Add the `mobile3D` switch from the final version; launch with it off |
-| On phones, the hero hides its WhatsApp button | Only the sticky bottom bar offers WhatsApp there | Fine while the bar is visible; revisit with the switch above |
-| Page text is rendered by JavaScript only | Search engines and link previews see little content | Pre-render the HTML at build time, as the final version did |
-| `site.reviews` holds hand-entered reviews | Showing only hand-picked reviews breaks the guidance in the playbook (Step 5) | Replace with the Trustpilot widget once the profile exists |
-| Two spellings: "Smoothvault Moves" in text, "Smooth Vault Moves" in the new logo | Inconsistent name across Google, Trustpilot and directories | Decide before creating the Google profile (playbook, first decision) |
+| `config.js` has no company number or registered office yet | The legal line shows only the Privacy and Booking terms links; UK law requires the company details | Fill in `companyNumber`, `registeredIn` and `registeredOffice` (playbook, Step 6) |
+| `mobile3D` is `true` | The playbook measured phone speed at 45/100 with 3D versus 91/100 without, and recommends `false` for launch | Set `mobile3D: false` in `public/config.js` |
+| On the review card front, `smoothvaultmoves.co.uk/review` needs 225 px but the column beside the QR code is 143 px, so it runs 42 px past the card's edge | The address would be cut off when printed | Move "Or visit" and the address below the QR code, where there is 317 px |
+| `/review/` shows only a WhatsApp fallback until review links exist | Customers scanning the card can't leave a Google or Trustpilot review yet | Add `googleReviewUrl` and/or `trustpilotUrl` once the profiles exist |
+| `site.reviews` holds hand-entered reviews | Showing only hand-picked reviews breaks the guidance in the playbook (Step 5) | Leave it empty; add the Trustpilot widget once the profile exists |
+| Two spellings: "Smoothvault Moves" in text, "Smooth Vault" in the logo | Inconsistent name across Google, Trustpilot and directories | Decide before creating the Google profile (playbook, first decision) |
+| Booking terms rest on assumptions (deposit size, when the balance is due, cancelling within 7 days) | Terms customers rely on may not match how the business works | Confirm them and have a solicitor check `/terms/` |
 | The FAQ intro lowercases the hours: "we reply during mon–fri, 9am–6pm." | Reads oddly | Show `site.hours` as written |
 | Choosing Storage or House clearance and skipping "Moving to" leaves a blank line after "From" in the WhatsApp message | Cosmetic | Filter out empty lines before adding the section breaks |
 
-These behave the same as in the original; nothing was changed except the list below.
+The last two behave the same in the original; they were kept so the rebuild matches it exactly.
 
-## Small changes made during the rebuild
+## Differences from the zip build
 
-None of these change how the site looks:
-
-- Shadows use `PCFShadowMap` directly. Three.js r186 removed `PCFSoftShadowMap` and was already falling back to it.
-- The frosted-glass header and bars now include the unprefixed `backdrop-filter`, which the original build had dropped, so Firefox gets the blur too.
-- The temporary scene used to light the 3D models is disposed after use.
-- Added a meta description, theme colour, `lang="en-GB"` and a favicon made from the Vault S mark.
-- `package.json` now lists Three.js and the Archivo and Inter fonts the site uses, and drops Tailwind, PostCSS and two font packages that nothing used.
-- The footer year is worked out once when the page loads instead of on every render.
+These don't change what visitors see:
+- The source is one Vite project rather than prebuilt files, so asset file names (hashes) differ, and `svm.js` lives at `/svm.js` with an hour's cache.
+- The logo is a React component instead of an injected SVG string.
+- Shadows use `PCFShadowMap` directly. Three.js r186 removed `PCFSoftShadowMap` and was already falling back.
+- The frosted header and bars include the unprefixed `backdrop-filter`, so Firefox gets the blur too.
 
 ## Suggested order of work
 
-1. Bring in the two zips, then merge the final version into this source (logo, legal pages, review page, settings, pre-rendering, headers).
-2. Make the six launch decisions at the top of the [playbook](launch-playbook.md).
-3. Fix the review card overflow, and print only once `/review/` is live.
-4. Connect this repo to Cloudflare Pages (build `npm run build`, output `dist`) so every push deploys.
-5. Work through the playbook: business email, Google Business Profile, Trustpilot, then the Trustpilot widget on the site.
+1. Make the six launch decisions at the top of the [playbook](launch-playbook.md), then fill in `public/config.js`.
+2. Connect this repo to Cloudflare Pages (build `npm run build`, output `dist`) so every push deploys.
+3. Fix the review card overflow, and print once `/review/` has its review links.
+4. Work through the playbook: business email, Google Business Profile, Trustpilot, then the Trustpilot widget on the site.

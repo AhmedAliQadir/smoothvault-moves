@@ -1,3 +1,4 @@
+import { legalHTML } from '../config/runtime'
 import { site } from '../config/site'
 import { whatsappLink } from '../lib/whatsapp'
 import { ClockIcon, MailIcon, PhoneIcon, WhatsAppIcon } from './icons'
@@ -51,6 +52,8 @@ export function Footer() {
         <p>
           © {year} {site.legalName}. Fully insured: goods in transit and public liability.
         </p>
+        {/* Company number, registered office and legal links, from public/config.js via public/svm.js */}
+        <p className="footer__legal" dangerouslySetInnerHTML={{ __html: legalHTML() }} />
       </div>
     </footer>
   )

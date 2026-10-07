@@ -63,6 +63,15 @@
 
 /* Base
    -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+}
+
+/* Keep [hidden] hidden even on elements that set their own display (used by config.js switches). */
+[hidden]:not([hidden='until-found' i]) {
+  display: none !important;
+}
+
 *,
 ::before,
 ::after {
@@ -287,28 +296,24 @@ a {
   text-decoration: none;
 }
 
+/* Vault S logo (Logo.tsx): its two colours come from these variables. */
 .logo {
+  --logo-ink: var(--color-ink);
+  --logo-line: var(--color-brand);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
 }
 
-.logo__mark {
-  flex: none;
-  width: 36px;
-  height: 36px;
+.logo svg {
+  display: block;
+  width: auto;
+  height: 46px;
 }
 
-.logo__word {
-  font: 800 1.125rem/1 var(--font-display);
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
-}
-
-.logo__sub {
-  margin-left: 4px;
-  font-weight: 600;
-  color: var(--color-brand);
+@media (max-width: 419px) {
+  .header .logo svg {
+    height: 40px;
+  }
 }
 
 .header__nav {
@@ -1893,16 +1898,13 @@ a {
   }
 }
 
-.footer__logo .logo__word {
-  color: var(--color-on-navy);
+.footer__logo .logo {
+  --logo-ink: #fff;
+  --logo-line: #5aa0e0;
 }
 
-.footer__logo .logo__sub {
-  color: var(--color-brand-on-navy);
-}
-
-.footer__logo .logo__mark rect {
-  fill: var(--color-navy-2);
+.footer__logo .logo svg {
+  height: 52px;
 }
 
 .footer__slogan {
@@ -1965,6 +1967,18 @@ a {
   }
 }
 
+/* Company details and legal links (filled in from public/config.js) */
+.footer__legal {
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.footer__legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Mobile contact bar
    -------------------------------------------------------------------------- */
 .mobile-bar {
@@ -2006,4 +2020,137 @@ a {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Static pages: privacy, terms, review, 404
+   -------------------------------------------------------------------------- */
+.page-main {
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+}
+
+.prose {
+  max-width: 760px;
+}
+
+.prose h2 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.prose h3 {
+  margin: var(--space-3) 0 var(--space-1);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.prose p,
+.prose li {
+  margin-top: 10px;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+.prose ul {
+  padding-left: 1.2em;
+  list-style: disc;
+}
+
+.prose a {
+  color: var(--color-brand);
+}
+
+.prose strong {
+  color: var(--color-ink);
+}
+
+.prose table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.prose th,
+.prose td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink-muted);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--color-brand-soft);
+  color: var(--color-ink);
+}
+
+.prose .form-box {
+  padding: var(--space-3);
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.updated {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+.review-card {
+  max-width: 640px;
+  margin-inline: auto;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.review-card .section-lede {
+  margin-inline: auto;
+}
+
+.review-card__stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: var(--space-3);
+  color: var(--color-cta);
+}
+
+.review-links {
+  display: grid;
+  gap: 12px;
+  margin-top: var(--space-4);
+}
+
+/* Hide the button area until config.js provides at least one review link. */
+.review-links:not(:has(a:not([hidden]))) {
+  display: none;
+}
+
+.review-links .btn {
+  justify-content: center;
+  width: 100%;
+}
+
+.review-soon {
+  margin-top: var(--space-3);
+  color: var(--color-ink-muted);
+}
+
+.notfound {
+  padding-block: clamp(80px, 12vw, 160px);
+  text-align: center;
+}
+
+.notfound .section-lede {
+  margin-inline: auto;
+}
+
+.notfound .btn {
+  margin-top: var(--space-4);
 }

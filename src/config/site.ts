@@ -1,3 +1,5 @@
+import { runtimeConfig } from './runtime'
+
 export interface Review {
   name: string
   area: string
@@ -19,8 +21,8 @@ export const site = {
   whatsapp: '447824101373',
   email: 'hello@smoothvaultmoves.co.uk',
   hours: 'Mon–Fri, 9am–6pm',
-  /** Optional Web3Forms access key. When set, each quote request is also emailed to the team. */
-  web3formsKey: '',
+  /** Optional Web3Forms access key, set in public/config.js. When set, each quote request is also emailed to the team. */
+  web3formsKey: runtimeConfig().web3formsKey || '',
   cities: ['Birmingham', 'Nottingham', 'Sheffield', 'Manchester', 'London', 'Glasgow', 'Edinburgh'],
   nations: ['England', 'Scotland', 'Wales'],
   /** Verified customer reviews. While empty, the reviews section asks customers to share theirs. */

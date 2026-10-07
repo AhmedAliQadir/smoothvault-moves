@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smooth Vault Moves — Review card (A6)</title>
+    <!--
+      Two-sided A6 card handed to customers after a move. Recreated from the Claude Design artifact
+      "Smoothvault Review Card" (https://claude.ai/artifact/8VgKqgFYU6ZNPxaj43W9xo).
+      The QR code encodes https://smoothvaultmoves.co.uk/review/ — that page must exist before cards are printed.
+      Print from a browser: each side prints on its own A6 page.
+      Change from the design: "Or visit" and the address sit below the QR code, because beside it the
+      address was wider than its column and ran past the card edge.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&amp;display=swap" />
+    <style>
+      body {
+        margin: 0;
+        padding: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 80px;
+        background: #e9edf2;
+        font-family: 'Archivo', system-ui, sans-serif;
+      }
+      .card {
+        width: 397px;
+        height: 559px;
+        box-sizing: border-box;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 10px 30px rgba(10, 28, 46, 0.15);
+      }
+      .card--front { background: #0a1c2e; color: #fff; }
+      .card--back { background: #fff; color: #0a1c2e; }
+      .route { display: flex; align-items: center; }
+      .route__start { width: 12px; height: 12px; flex: none; border-radius: 50%; border: 4px solid #1f6fb2; }
+      .route__line { height: 5px; flex: 1; background: #1f6fb2; }
+      .route__end { width: 18px; height: 18px; flex: none; border-radius: 50%; background: #f26b21; }
+      @page { size: A6; margin: 0; }
+      @media print {
+        body { padding: 0; gap: 0; display: block; background: none; }
+        .card { width: 105mm; height: 148mm; box-shadow: none; break-after: page; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Front -->
+    <section class="card card--front" aria-label="Front">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <img src="../../public/brand/logo-reversed.svg" alt="Smooth Vault Moves" style="height: 40px; width: 164px; display: block" />
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <h1 style="margin: 0; font-size: 32px; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance">
+            How did your move go?
+          </h1>
+          <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #c9d6e3; text-wrap: pretty">
+            Scan to leave an honest review on Google or Trustpilot. It takes about a minute, and it helps other families choose with confidence.
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
+        <div style="width: 156px; height: 156px; flex: none; box-sizing: border-box; padding: 10px; background: #fff; border-radius: 14px">
+          <img src="../brand/review-qr.png" alt="QR code linking to smoothvaultmoves.co.uk/review" style="width: 136px; height: 136px; display: block" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #5aa0e0">Or visit</span>
+          <span style="font-size: 15px; font-weight: 600; line-height: 1.3">smoothvaultmoves.co.uk/review</span>
+        </div>
+      </div>
+      <div class="route">
+        <span class="route__start" style="background: #0a1c2e"></span>
+        <span class="route__line"></span>
+        <span class="route__end"></span>
+      </div>
+    </section>
+
+    <!-- Back -->
+    <section class="card card--back" aria-label="Back">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <img src="../../public/brand/logo.svg" alt="Smooth Vault Moves" style="height: 40px; width: 164px; display: block" />
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 26px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance">
+            Thank you for moving with us.
+          </h2>
+          <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #33475b; text-wrap: pretty">
+            We hope you're settling in. If anything needs sorting after your move, we're one message away.
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px; font-weight: 500">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F6FB2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 3h3.5l1.8 4.5-2.3 1.4a11 11 0 0 0 5.1 5.1l1.4-2.3L19 13.5V17a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 3 5.2 2 2 0 0 1 5 3z"></path>
+          </svg>
+          <span>WhatsApp or call 07824 101373</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F6FB2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3.5 6.5 8.5 6 8.5-6"></path>
+          </svg>
+          <span>hello@smoothvaultmoves.co.uk</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F6FB2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+          </svg>
+          <span>smoothvaultmoves.co.uk</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <p style="margin: 0; font-size: 12px; line-height: 1.45; color: #4a5b6e">
+          We ask every customer for a review, whatever their experience, and we never offer rewards for reviews.
+        </p>
+        <div class="route">
+          <span class="route__start" style="background: #fff"></span>
+          <span class="route__line"></span>
+          <span class="route__end"></span>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

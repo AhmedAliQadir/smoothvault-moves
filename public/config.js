@@ -23,5 +23,5 @@ window.SVM_CONFIG = {
 
   // 3D hero animation on phones. Set to false to show the lighter illustrated
   // hero on small screens instead (faster pages on older phones).
-  mobile3D: true
+  mobile3D: false
 };

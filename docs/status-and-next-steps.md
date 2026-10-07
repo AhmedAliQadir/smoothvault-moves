@@ -36,7 +36,6 @@ Typecheck, lint and build pass, and `npm audit` reports no vulnerabilities.
 | Issue | Effect | Suggested fix |
 | --- | --- | --- |
 | `config.js` has no company number or registered office yet | The legal line shows only the Privacy and Booking terms links; UK law requires the company details | Fill in `companyNumber`, `registeredIn` and `registeredOffice` (playbook, Step 6) |
-| `mobile3D` is `true` | The playbook measured phone speed at 45/100 with 3D versus 91/100 without, and recommends `false` for launch | Set `mobile3D: false` in `public/config.js` |
 | `/review/` shows only a WhatsApp fallback until review links exist | Customers scanning the card can't leave a Google or Trustpilot review yet | Add `googleReviewUrl` and/or `trustpilotUrl` once the profiles exist |
 | `site.reviews` holds hand-entered reviews | Showing only hand-picked reviews breaks the guidance in the playbook (Step 5) | Leave it empty; add the Trustpilot widget once the profile exists |
 | Two spellings: "Smoothvault Moves" in text, "Smooth Vault" in the logo | Inconsistent name across Google, Trustpilot and directories | Decide before creating the Google profile (playbook, first decision) |

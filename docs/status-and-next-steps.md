@@ -1,6 +1,6 @@
 # Status and next steps
 
-The repo now holds the final website as editable source: the home page from the Claude artifact plus everything the final `smoothvault-site.zip` added (Vault S logo, legal and review pages, `config.js` settings, SEO). Both were checked against the originals. What's left is mostly decisions and setup from the launch playbook.
+The repo now holds everything from the Claude session: the website as editable source (the artifact's home page plus what the final `smoothvault-site.zip` added: Vault S logo, legal and review pages, `config.js` settings, SEO), the launch playbook, the review card and the launch kit. The website was checked against the originals. What's left is mostly decisions and setup from the launch playbook.
 
 Last updated 7 October 2026.
 
@@ -12,7 +12,7 @@ Last updated 7 October 2026.
 | `smoothvault-site.zip` (final build from the chat) | 6 Oct 2026 | Merged into `src/`, the static pages, `index.html` and `public/` |
 | [Smoothvault Moves — Launch Playbook](https://claude.ai/artifact/1ZoKmdehhJ6oe1rrRSQa2n) (doc) | 6 Oct 2026 | [launch-playbook.md](launch-playbook.md) |
 | [Smoothvault Review Card](https://claude.ai/artifact/8VgKqgFYU6ZNPxaj43W9xo) (design) | 6 Oct 2026 | [review-card/index.html](review-card/index.html), QR code in [brand/](brand) |
-| `smoothvault-launch-kit.zip` | 6 Oct 2026 | Not here; only the profile pictures in it are missing (logos, icons and the social image came with the site zip) |
+| `smoothvault-launch-kit.zip` | 6 Oct 2026 | Profile picture, high-res logos and QR code in [brand/](brand) (see its README); vector logos in `public/brand/`; review messages in the playbook, Step 5 |
 
 ## How it was checked
 

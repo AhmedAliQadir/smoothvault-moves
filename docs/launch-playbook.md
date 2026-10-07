@@ -21,7 +21,7 @@ The website is built and tested, with the Vault S logo in place; six decisions a
 
 ## What's ready
 
-`smoothvault-site.zip` is the complete website, ready to upload as it is. `smoothvault-launch-kit.zip` holds the logo files, profile pictures and review QR code.
+`smoothvault-site.zip` is the complete website, ready to upload as it is. `smoothvault-launch-kit.zip` holds the logo files, profile pictures and review QR code (in this repo: [brand/](brand/README.md) and `public/brand/`).
 
 | Part | What it is |
 | --- | --- |

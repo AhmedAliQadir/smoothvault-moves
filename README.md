@@ -80,10 +80,11 @@ At build time `scripts/prerender.mjs` writes a snapshot of the home page into `d
 | Call-to-action orange | `#F26B21` |
 | Page background | `#F7F9FC` |
 
-Typefaces: Archivo (headings) and Inter (body), self-hosted through `@fontsource-variable`. Logo variants, icons and the social image are in `public/brand/` and `public/`.
+Typefaces: Archivo (headings) and Inter (body), self-hosted through `@fontsource-variable`. Logo variants, icons and the social image are in `public/brand/` and `public/`; the profile picture and high-res PNG logos are in `docs/brand/`.
 
 ## Docs
 
 - [Launch playbook](docs/launch-playbook.md): hosting, business email, Google Business Profile, Trustpilot, collecting reviews, UK legal checklist, first 30 days
 - [Review card](docs/review-card/index.html): the two-sided A6 card for customers
+- [Brand files](docs/brand/README.md): profile picture, high-res logos and the review QR code
 - [Status and next steps](docs/status-and-next-steps.md)
